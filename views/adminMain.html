@@ -1,0 +1,32 @@
+﻿<nav class="navbar mynav" ng-controller="mainCtrl">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#"><img src="images/logo.png"></a>
+        </div>
+        <div id="navbar" class="navbar-collapse" >
+          <div class="link-backtosite"><a href="http://lookprice.ru/" target="_blank">Вернуться на сайт</a></div>
+          <ul class="nav navbar-nav navbar-right">
+            <li ng-controller="productCtrl">Привет, {{user.name}}! <span class="btn-link" ng-click="logout();" style="cursor:pointer;">Выход</span></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+<div class="container" ng-controller="mainCtrl">
+  <div class="toggle-menu" ng-click="ToggleNav()">Меню</div>
+  <div class="row main-panel user-class">
+        <div class="col-sm-3 button-menu">
+          <button href="" class="btn btn-default" ng-repeat="item in routes" aria-controls="home" role="tab" data-toggle="tab" ng-click="setScreen($index)" ng-show="$parent.shownav" ng-class="{'active': (item.path == current) }"><i class="fa__text" ng-class="{'zayavka': ($index == 0) , 'avto-user': ($index == 1), 'dobavit-user': ($index == 2), 'redakt-profile': ($index == 3) }"></i>{{item.name}}</button></li>
+        </div>
+  	   <div class="col-sm-9">
+          <div ng-include="'views/adminProducts.html'" ng-show="mainView"/></div>
+          <div ng-include="'views/adminAutos.html'" ng-show="autoView"/></div>
+          <div ng-include="'views/adminRequests.html'" ng-show="requestView"/></div>
+          <div ng-include="'views/adminEdit.html'" ng-show="editView"/></div>
+  	   </div>
+    </div>
+</div>
+
+
+    <div id="loader-wrapper" style="display:none;">
+        <div id="loader"></div>
+    </div>

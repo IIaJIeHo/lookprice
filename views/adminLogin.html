@@ -1,0 +1,13 @@
+﻿<div class="container-fluid">
+<div class="top-logo"><img src="images/logo.png"  /></div>
+<div class="top-hat">
+    <b>Вход для пользователя:</b> Введите ваш логин и пароль чтобы войти в систему
+</div>
+<div class="well" ng-controller="authCtrl">
+    <login-form email="email" password="password" authenticate="authenticate(email,password)"></login-form>
+</div>
+    <ng-alert type="success" pointer="a-user-email" strong="Поздравляем тебя!" text="На указанную вами почту отправлен пароль."> </ng-alert>
+    <ng-alert type="success" pointer="a-user-new" strong="Поздравляем!" text="Вы зарегистрировались, теперь введите логин и пароль."> </ng-alert>
+    <ng-alert type="danger" pointer="a-user-password" strong="Пароль!" text="Неправильный, неправильный пароль!"> </ng-alert>
+    <ng-alert type="danger" pointer="a-user-user" strong="Пользователь!" text="Нет такого пользователя!"> </ng-alert>
+</div>

@@ -1,0 +1,124 @@
+﻿<style>
+    #productTable { width: auto; }
+    #productTable td { max-width: 150px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; }
+    #productTable td input { max-width: 125px; }
+</style>
+    <div class="alert alert-success" id="a-user-edit-profile" style="position:fixed;bottom:0;right:0;display:none;">
+        <button type="button" class="close" data-dismiss="alert">x</button>
+        <strong>Поздравляем! </strong>
+        Вы изменили свой профиль
+    </div>
+    <div class="alert alert-success" id="a-user-edit-password" style="position:fixed;bottom:0;right:0;display:none;">
+        <button type="button" class="close" data-dismiss="alert">x</button>
+        <strong>Ого! </strong>
+        Вы изменили свой пароль
+    </div>
+<div ng-controller="productCtrl">
+<div id="loader-wrapper" ng-if="loading">
+    <div id="loader"></div>
+</div>
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-info">
+    <div class="panel-heading" role="tab" id="headingOne">
+        <a role="button" data-toggle="collapse" data-parent="#accordion"  data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+        <h4 class="panel-title">
+          Личные данные пользователя<span class="strelka3"></span>
+        </h4>
+        </a>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+      <div class="panel-body">
+        <form name="authForm" novalidate>
+            <div class="form-group">
+                <label>Название</label>
+                <input name="name" class="form-control" ng-model="autoservice.name"/>
+            </div>
+            <div class="form-group">
+                <label>Интуресующие города</label>
+                    <multiselect class="input-xlarge" multiple="true"
+                        ng-model="autoservice.subjects"
+                        options="subject.label for subject in subjects.data"
+                        change="selected()" ></multiselect>
+            </div>
+            <div><span ng-repeat="subject in subjects.data | filter:filterbySubject">{{subject.label}} ; </span></div>
+            <div class="form-group">
+                <label>Адрес</label>
+                <input name="surname" class="form-control" ng-model="autoservice.address"/>
+            </div>
+            <div class="form-group" ng-class="{'has-error':authForm.phone.$invalid && validation.phone}">
+                <label>Телефон</label>
+                <input name="phone" class="form-control" ng-minlength="11" ng-pattern="/^[0-9]{11}$/"
+                       ng-model="autoservice.phone" ng-blur="validation.phone = true" required />
+                <div ng-show="validation.phone">
+                    <span class="help-block" ng-show="authForm.phone.$error.required || authForm.phone.$error.minlength">Введите телефон</span>
+                    <span class="help-block" ng-show="authForm.phone.$error.pattern && !authForm.phone.$error.required && !authForm.phone.$error.minlength">Телефон длинной 11 символов и состоит из цифр</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Сайт</label>
+                <input name="surname" class="form-control" ng-model="autoservice.site"/>
+            </div>
+            <div class="form-group">
+                <label>Email</label>
+                <input name="name" class="form-control" value="{{autoservice.email}}" ng-disabled="true" />
+            </div>
+            <div class="form-group">
+                <label>Метро</label>
+                <select class="form-control" id="metro" ng-model="autoservice.metro" ng-options="metro for metro in metrostations"><option value=''>Выбрать</option></select>
+            </div>
+            <div class="form-group">
+                <label>Округ</label>
+                <select class="form-control" id="region" ng-model="autoservice.region" ng-options="region for region in regions"><option value=''>Выбрать</option></select>
+            </div>
+            <div class="form-group">
+                <label>Ссылка на профиль</label>
+                <input name="surname" class="form-control" ng-model="autoservice.link"/>
+            </div>
+            <div class="text-center">
+                <button type="submit" ng-click="editUser(autoservice)"
+                        ng-disabled="authForm.$invalid"
+                        class="btn btn-primary">
+                    Сохранить данные
+                </button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="panel panel-info">
+    <div class="panel-heading" role="tab" id="headingTwo">
+        <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+        <h4 class="panel-title">
+          Изменить пароль<span class="strelka3"></span>
+          </h4>
+        </a>
+      </h4>
+    </div>
+    <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
+      <div class="panel-body">
+        <form name="passchange" novalidate>
+            <div class="form-group">
+                <label>Новый пароль</label>
+                <input name="password" class="form-control" type="password" ng-model="newpassword" ng-blur="validation.password = true" required/>
+            </div>
+            <div class="form-group" ng-class="{'has-error':(newpassword != repeatpassword) && validation.password && validation.repeatpassword}">
+                <label>Повторите пароль</label>
+                <input name="repeatpassword" type="password" class="form-control"
+                       ng-model="repeatpassword" ng-blur="validation.repeatpassword = true" required />
+                <div ng-show="validation.password && validation.repeatpassword">
+                    <span class="help-block" ng-show="newpassword != repeatpassword">Пароли не совпадают</span>
+                </div>
+            </div>
+            <div class="text-center">
+                <button type="submit" ng-click="editUser(autoservice,true, newpassword)"
+                        ng-disabled="(newpassword != repeatpassword) || passchange.password.$error.required"
+                        class="btn btn-primary">
+                    Изменить пароль
+                </button>
+            </div>
+        </form>
+    </div>
+  </div>
+</div>
+</div>
+ 

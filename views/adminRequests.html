@@ -1,0 +1,72 @@
+﻿    <div class="alert alert-success" id="a-request-new" style="position:fixed;bottom:0;right:0;display:none;">
+        <button type="button" class="close" data-dismiss="alert">x</button>
+        <strong>Поздравляем! </strong>
+        Вы добавили новую заявку
+    </div>
+
+<div ng-controller="autoCtrl" class="partial-view wrapper-part">
+    <div class="container-fluid leave-request">
+    <div class="choose-work">       
+        <div class="row">
+            <div class="col-md-12"><h2>Укажите вид услуг</h2></div>
+        </div>
+        <div class="row visible-sm visible-xs">
+            <div class="col-sm-12">
+                <select class="form-control" id="chooserequest" ng-model="chosenRequest" ng-change="changeRequest()">
+                    <option value='1'>Заявка на ТО</option>
+                    <option value='2'>Заявка на ремонт</option>
+                    <option value='3'>Заявка на кузовные работы</option>
+                    <option value='4'>Заявка на тюнинг</option>
+                </select>
+            </div>
+        </div>
+        <div class="row hidden-sm hidden-xs">
+            <div class="b-product">
+                <div class="b-product__child" ng-repeat="item in request_types"><div class="choose-work__wrap" ng-click="viewItem(mainproduct, $index+1)" ng-class="{'choose-work__active' : allitems == $index+1}"><div class="sprite sprite-u{{$index + 1}}"></div><p>{{item}}</p></div></div>
+            </div>
+        </div>
+        <div class="row">
+            <p>Пожалуйста укажите 1 из 6 вариантов</p>
+        </div>
+    </div>
+    <ng-spinner></ng-spinner>
+
+    <div id="request{{$index+1}}"  ng-repeat="type in salon_types" ng-if="allitems == ($index + 1)" ng-init="rootIndex = $index">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h2 class="panel-title"><i class="kuzov-work"></i>{{request_types[$index]}}</h2>
+          </div>
+          <div class="panel-body">
+                <form name="workForm{{$index+1}}" novalidate>
+                      <div class="panel panel-info" ng-repeat="subtype in type" ng-init="parentIndex = $index">
+                            <div class="panel-heading" role="tab" id="mend{{$index+1}}" ng-if="subtype.title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" data-target="#colmend{{$index+1}}" aria-expanded="false" aria-controls="colmend{{$index+1}}">
+                                <h4 class="panel-title">
+                                  {{subtype.title}}<span class="strelka3"></span>
+                                  </h4>
+                                </a>
+                              </h4>
+                            </div>
+                            <div id="colmend{{$index+1}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="mend{{$index+1}}">
+                              <div class="panel-body">
+                                <div role="tabpanel" class="tab-pane active">
+                                    <div class="form-group row">
+                                        <ul class="checkbox-grid">
+                                            <li ng-repeat="item in subtype.data">
+                                                <label><input type="checkbox" ng-model="mainproduct.salons[rootIndex][parentIndex][$index]" />
+                                                {{item}}</label>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+</div>
+</div>

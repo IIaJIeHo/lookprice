@@ -1,0 +1,19 @@
+<div class="dropdown">
+  <button class="btn width100 form-control" ng-click="toggleSelect()" ng-disabled="disabled" ng-class="{'error': !valid()}">
+    <span class="pull-left">{{header}}</span>
+    <span class="caret pull-right ma10" ></span>
+  </button>
+  <ul class="dropdown-menu fixed-height">
+    <li>
+      <input class="input-block-level form-control" type="text" ng-model="searchText.label" autofocus="autofocus" placeholder="Поиск" />
+    </li>
+    <li ng-show="multiple">
+      <button class="btn-link btn-sm" ng-click="checkAll()"><i class="icon-ok"></i>Выбрать все</button>
+      <button class="btn-link btn-sm pull-right" ng-click="uncheckAll()"><i class="icon-remove"></i>Убрать все</button>
+    </li>
+    <li class="multiselect-item" ng-repeat="i in items | filter:searchText" ng-class="{'bg-success': i.checked, 'icon-empty': !i.checked}">
+      <a ng-click="select(i); focus()">
+        <i ng-class="{'icon-ok': i.checked, 'icon-empty': !i.checked}"></i>{{i.label}}</a>
+    </li>
+  </ul>
+</div>
