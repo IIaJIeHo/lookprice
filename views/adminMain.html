@@ -15,7 +15,7 @@
   <div class="toggle-menu" ng-click="ToggleNav()">Меню</div>
   <div class="row main-panel user-class">
         <div class="col-sm-3 button-menu">
-          <button href="" class="btn btn-default" ng-repeat="item in routes" aria-controls="home" role="tab" data-toggle="tab" ng-click="setScreen($index)" ng-show="$parent.shownav" ng-class="{'active': (item.path == current) }"><i class="fa__text" ng-class="{'zayavka': ($index == 0) , 'avto-user': ($index == 1), 'dobavit-user': ($index == 2), 'redakt-profile': ($index == 3) }"></i>{{item.name}}</button></li>
+          <button href="" class="btn btn-default" ng-repeat="item in routes" aria-controls="home" role="tab" data-toggle="tab" ng-click="setScreen($index)" ng-show="$parent.shownav" ng-class="{'active': (item.path == current) }"><i class="fa__text" ng-class="{'zayavka': ($index == 0) , 'avto-user': ($index == 1), 'dobavit-user': ($index == 2), 'redakt-profile': ($index == 3) }"></i>{{item.name}}</button>
         </div>
   	   <div class="col-sm-9">
           <div ng-include="'views/adminProducts.html'" ng-show="mainView"/></div>

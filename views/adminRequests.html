@@ -60,12 +60,57 @@
                                     </div>
                                 </div>
                                 </div>
+                        </div>
+                        <div class="form-group comment-area"><label>ЧТО НУЖНО СДЕЛАТЬ:</label><textarea class="form-control" ng-model="mainproduct.details.comment" placeholder="Что нужно сделать?" rows="5"> </textarea></div>
+                        <div class="form-group" ng-class="{'has-error': errorfile}">
+                            <label>Фото</label>
+                            <div class="row photo-cube">
+                                <div class="col-md-3" ng-repeat="i in mainproduct.details.image">
+                                    <a target="_blank" href="{{baseurl}}{{i}}"><img ng-dostyle="max-width:100%; border: 1px solid;" ng-src="{{baseurl}}{{i}}" /></a>
+                                    <a class="pointer" ng-click="deleteImage(i);" ng-show="startEdit">удалить</a>
+                                </div>
                             </div>
-                </div>
-            </form>
+                            <input name="name" type='file' model='mainproduct.details.image' error='errorfile' ng-model='hello_file' file-feed multiple ng-show="startEdit" />
+                            <div ng-show="errorfile">
+                                <span class="help-block" ng-show="errorfile == 'Toomuch'">Не более 4 файлов</span>
+                                <span class="help-block" ng-show="errorfile == 'Toomuch1mb'">Каждый файл не более 1 мб</span>
+                                <span class="help-block" ng-show="errorfile == 'Type'">Загружать можно только картинки</span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                        <ul class="checkbox-grid">
+                        <li>             
+                            <label><inputtype="checkbox" ng-model="mainproduct.tohome" />
+                            Выезд на дом</label>
+                        </li>
+                        </ul>
+                        <div class="form-group row">
+                        <ul class="checkbox-grid">
+                            <li>             
+                                <label ><input type="checkbox" ng-model="mainproduct.time[0]" />
+                                Утренее время</label>
+                            </li>
+                            <li>             
+                                <label ><input type="checkbox" ng-model="mainproduct.time[1]" />
+                                Дневное время</label>
+                            </li>
+                            <li>             
+                                <label ><input type="checkbox" ng-model="mainproduct.time[2]" />
+                                Вечернее время</label>
+                            </li>
+                            <li>             
+                                <label ><input type="checkbox" ng-model="mainproduct.time[3]" />
+                                Ночное время</label>
+                            </li>
+                        </ul>
+                    </div>
+                    </div>
+                    </div>
+                </form>
+                <button type="submit" ng-click="addRequest(mainproduct);" class="btn btn-primary">Опубликовать заявку</button>
+            </div>
         </div>
     </div>
-</div>
 
 
 </div>

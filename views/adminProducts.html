@@ -31,8 +31,6 @@
             <th><a href="" ng-click="order('type')">Тип <i class="fa" ng-show="predicate === 'type'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'type'" ></i></a></th>
 
             <th><a href="" ng-click="order('name')">Номер заявки <i class="fa" ng-show="predicate === 'name'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'name'" ></i> </a></th>
-
-            <th><a href="" ng-click="order('auto.mark')">Автомобиль <i class="fa" ng-show="predicate === 'auto.mark'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'auto.mark'" ></i></a></th>
             <th><a href="" ng-click="order('details.comment')">Комментарий <i class="fa" ng-show="predicate === 'details.comment'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'details.comment'" ></i></a></th>
             <th><a href="" ng-click="order('responds.length')">Кол-во откликов <i class="fa" ng-show="predicate === 'responds.length'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'responds.length'" ></i></a></th>
 
@@ -49,23 +47,22 @@
         <tr ng-repeat="item in products | filter:query | orderBy:predicate:reverse" ng-class="{'success':item.completed}" >
             <td ng-click="viewItem(item)"><span class="fa__type" ng-class="{'to': item.type == 'Заявка на ТО', 'kuzov': item.type == 'Кузовные работы', 'remont': item.type == 'Заявка на Ремонт','tuning': item.type == 'Заявка на тюнинг'}"></span>{{item.type}}</td>
             <td ng-click="viewItem(item)">{{item.name}}</td>
-            <td ng-click="viewItem(item)">{{item.auto.mark}}</td>
             <td ng-click="viewItem(item)" class="details">{{item.details.comment}}</td>
             <td ng-click="viewItem(item)" class="amount-responds"><span>{{item.responds.length}}</span></td>
             <td ng-click="viewItem(item)" class="date">{{formatDate(item.date)}}</td>
             <td class="active-buttons">
                 <button ng-click="viewItem(item)" class="btn" data-toggle="tooltip" title="Посмотреть">
-                    <i class="eye"></i>
+                    <i class="sprite sprite-eye"></i>
                 </button>
                 <button ng-click="editItem(item)" ng-disabled="item.responds.length > 0" class="btn" data-toggle="tooltip" title="Изменить">
-                    <i class="edit"></i>
+                    <i class="sprite sprite-edit"></i>
                 </button>
                 <button ng-click="isdeleteProduct(item)" class="btn" data-toggle="tooltip" title="Удалить">
-                    <i class="del"></i>
+                    <i class="sprite sprite-delete"></i>
                 </button>
                 <button ng-click="completeItem(item,item.type,item.auto,item.responds)" class="btn" data-toggle="tooltip" title="Завершить">
-                    <i class="play" ng-if="!item.completed"></i>
-                    <i class="stop" ng-if="item.completed"></i>
+                    <i class="sprite sprite-play" ng-if="!item.completed"></i>
+                    <i class="sprite sprite-stop" ng-if="item.completed"></i>
                 </button>
             </td>
         </tr>
@@ -207,25 +204,6 @@
         </div>
     </div>
 </div>
-            <div class="panel panel-default">
-              <div class="panel-heading">
-                <h2 class="panel-title"><i class="big-car"></i>Данные автомобиля</h2>
-              </div>
-              <div class="row autodescription container-fluid">
-                <div class="col-md-4 col-sm-4"><label>Марка</label><div>{{mainproduct.auto.mark || 'нет'}}</div> </div>
-                <div class="col-md-4 col-sm-4"><label>Модель</label><div>{{mainproduct.auto.model || 'нет'}}</div> </div>
-                <div class="col-md-4 col-sm-4"><label>Поколение</label><div>{{mainproduct.auto.generation || 'нет'}}</div> </div>
-                <div class="col-md-4 col-sm-4"><label>Год</label><div>{{mainproduct.auto.year || 'нет'}}</div> </div>
-                <div class="col-md-4 col-sm-4"><label>Тип двигателя</label><div>{{mainproduct.auto.engine || 'нет'}}</div> </div>
-                <div class="col-md-4 col-sm-4"><label>Коробка</label><div>{{mainproduct.auto.box || 'нет'}}</div> </div>
-                <div class="col-md-4 col-sm-4"><label>Мощность</label><div>{{mainproduct.auto.body || '0'}} л.с.</div> </div>
-                <div class="col-md-4 col-sm-4"><label>Объем двигателя</label><div>{{mainproduct.auto.volume || '0'}} л.</div> </div>
-                <div class="col-md-4 col-sm-4"><label>Цвет</label><div>{{mainproduct.auto.color || 'нет'}}</div> </div>
-                <div class="col-md-4 col-sm-4"><label>Тип Кузова</label><div>{{mainproduct.auto.drive || 'нет'}}</div> </div>
-                <div class="col-md-4 col-sm-4"><label>Пробег</label><div>{{mainproduct.auto.mileage || '0'}} км</div> </div>
-                <div class="col-md-4 col-sm-4"><label>Vin</label><div>{{mainproduct.auto.vin || 'нет'}}</div> </div>
-                </div>
-            </div>
             <div class="panel panel-default hidden" >
                 <div class="panel-heading">
                 <h2 class="panel-title"><i class="big-car"></i>Автомобиль</h2>
@@ -279,6 +257,50 @@
               </div>
             </div>
         </div>
+
+
+    <div id="request{{$index+1}}"  ng-repeat="type in salon_types" ng-if="mainproduct.type == requests[$index]" ng-init="rootIndex = $index">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h2 class="panel-title"><i class="sprite-kuzov-work"></i>{{request[$index]}}</h2>
+          </div>
+          <div class="panel-body">
+                <form name="workForm{{$index+1}}" novalidate>
+                      <div class="panel panel-info" ng-repeat="subtype in type" ng-init="parentIndex = $index">
+                            <div class="panel-heading" role="tab" id="mend{{$index+1}}" ng-if="subtype.title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" data-target="#colmend{{$index+1}}" aria-expanded="false" aria-controls="colmend{{$index+1}}">
+                                <h4 class="panel-title">
+                                  {{subtype.title}}<span class="strelka3"></span>
+                                  </h4>
+                                </a>
+                              </h4>
+                            </div>
+                            <div id="colmend{{$index+1}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="mend{{$index+1}}">
+                              <div class="panel-body">
+                                <div role="tabpanel" class="tab-pane active">
+                                    <div class="form-group row">
+                                        <ul class="checkbox-grid">
+                                            <li ng-repeat="item in subtype.data">
+                                                <label ng-hide="!startEdit && !mainproduct.salons[rootIndex][parentIndex][$index]"><input ng-disabled="!startEdit" type="checkbox" ng-model="mainproduct.salons[rootIndex][parentIndex][$index]" />
+                                                {{item}}</label>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                    </div>
+                    <div ng-if="startEdit" class="text-center bottom-button">
+                        <button type="submit" ng-click="updateProduct(mainproduct)"
+                                class="btn btn-primary">
+                            Обновить
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
         <div class="container-fluid" ng-if="mainproduct.type == 'Заявка на тюнинг'">
             <div class="panel panel-info">
               <div class="panel-heading">

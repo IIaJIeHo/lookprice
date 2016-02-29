@@ -27,12 +27,13 @@
     $scope.answered = false;
     $scope.showtable = false;
     $scope.baseurl = $location.absUrl().substring(0,$location.absUrl().indexOf('/a'));
-    $scope.requests = ['Заявка на ТО','Заявка на Ремонт','Кузовные работы','Заявка на тюнинг'];
+    $scope.requests = ['Ногтевой сервис','Парикмахерские услуги','Косметология','Визаж','Массаж','Татуаж'];
     $scope.texts = Data.getWorkTypes();
     $scope.metrostations = Data.getMetro();
     $scope.regions = Data.getRegions();
     $scope.subjects = Data.getSubjects();
     $rootScope.subjects = $scope.subjects;
+    $scope.salon_types = Data.getSalonTypes();
     $scope.logout = function(){
         $rootScope.userid = undefined;
         document.cookie = "autoid=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;";

@@ -116,7 +116,7 @@ gulp.task('clean', function () {
 gulp.task('javascript:admin', function () {
   gulp.src(['angular.js', './ngmodules/*.js', 'md5.min.js','sweetalert.min.js',
     'angular-locale_ru-ru.js', 'jquery-latest.js','bootstrap.min.js' , './modules/config.admin.js' , 
-    './modules/directives.js', './modules/factories.js', './controllers/adminControllers.js', './controllers/adminProductController.js'])
+    './modules/directives.js', './modules/factories.js', './modules/ui-bootstrap-tpls-1.2.1.min.js', './controllers/adminControllers.js', './controllers/adminProductController.js'])
     .pipe(debug())
     .pipe(uglify())
     .pipe(concat('bundle_admin.min.js'))

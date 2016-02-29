@@ -132,6 +132,41 @@
               </div>
             </div>
         </div>
+    <div id="request{{$index+1}}"  ng-repeat="type in salon_types" ng-if="mainproduct.type == requests[$index]" ng-init="rootIndex = $index">
+        <div class="panel panel-info">
+          <div class="panel-heading">
+            <h2 class="panel-title"><i class="sprite-kuzov-work"></i>{{request[$index]}}</h2>
+          </div>
+          <div class="panel-body">
+                <form name="workForm{{$index+1}}" novalidate>
+                      <div class="panel panel-info" ng-repeat="subtype in type" ng-init="parentIndex = $index">
+                            <div class="panel-heading" role="tab" id="mend{{$index+1}}" ng-if="subtype.title">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" data-target="#colmend{{$index+1}}" aria-expanded="false" aria-controls="colmend{{$index+1}}">
+                                <h4 class="panel-title">
+                                  {{subtype.title}}<span class="strelka3"></span>
+                                  </h4>
+                                </a>
+                              </h4>
+                            </div>
+                            <div id="colmend{{$index+1}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="mend{{$index+1}}">
+                              <div class="panel-body">
+                                <div role="tabpanel" class="tab-pane active">
+                                    <div class="form-group row">
+                                        <ul class="checkbox-grid">
+                                            <li ng-repeat="item in subtype.data">
+                                                <label ng-hide="!startEdit && !mainproduct.salons[rootIndex][parentIndex][$index]"><input ng-disabled="!startEdit" type="checkbox" ng-model="mainproduct.salons[rootIndex][parentIndex][$index]" />
+                                                {{item}}</label>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
         <div class="container-fluid requests" ng-if="mainproduct.type == 'Заявка на тюнинг'">
             <div class="panel panel-info">
               <div class="panel-heading">

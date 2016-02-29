@@ -25,11 +25,12 @@ angular.module("sportsStoreAdmin")
     $scope.showtable = false;
     $scope.toogleAutoservice = [];
     $scope.baseurl = $location.absUrl().substring(0,$location.absUrl().indexOf('/a'));
-    $scope.requests = ['Заявка на ТО','Заявка на Ремонт','Кузовные работы','Заявка на тюнинг'];
+    $scope.requests = ['Ногтевой сервис','Парикмахерские услуги','Косметология','Визаж','Массаж','Татуаж'];
     $scope.texts = Data.getWorkTypes();
     $scope.selectedCar = [];
     $scope.subjects = Data.getSubjects();
     $rootScope.subjects = $scope.subjects;
+    $scope.salon_types = Data.getSalonTypes();
 
     $('#navigation a').click(function (e) {
         e.preventDefault();
@@ -185,7 +186,7 @@ angular.module("sportsStoreAdmin")
             else{
                 var subjects = "";
                 angular.forEach($scope.subjects.data, function (value, key) {
-                    if (user.subjects.indexOf(value.id) >= 0){
+                    if ((user.subjects)&&(user.subjects.indexOf(value.id) >= 0)){
                         subjects += value.label+" ;";
                     }
                 });
@@ -253,15 +254,11 @@ angular.module("sportsStoreAdmin")
 
     $scope.updateProduct = function (product) {
         $scope.loading = true;
-        var auto = product.auto;
         var responds = product.responds;
         $scope.updatedRequest = product;
         product.date = Date.now();
-        product.autoid = product.auto._id.$oid;
-        product.auto = [];
         product.responds = [];
         product.$update().then(function(newProduct){ 
-            newProduct.auto = auto;
             newProduct.responds = responds;
             $scope.products.push(newProduct);
             $scope.products.splice($scope.products.indexOf(product), 1);
@@ -460,6 +457,7 @@ angular.module("sportsStoreAdmin")
         $scope.mainproduct.details.destructions = [[],[],[],[],[],[],[],[],[],[],[]];
         $scope.mainproduct.details.image = [];
         $scope.mainproduct.salons = [[[],[]],[[]],[[],[]],[[]],[[]],[[],[],[],[]]];
+        $scope.mainproduct.time = [];
         $scope.modelinput = false;
         $scope.markinput = false;
         $scope.generationinput = false;   
@@ -594,14 +592,9 @@ angular.module("sportsStoreAdmin")
     }
 
     $scope.addRequest = function (request) {
-        if (request.autoid == undefined){
-            return false;
-        }
         $scope.loading = true;
-        var auto = request.autoid;
         request.userid=$rootScope.userid;
-        request.type = $scope.requests_desc[$scope.allitems - 1];
-        request.autoid = request.autoid._id.$oid;
+        request.type = $scope.request_types[$scope.allitems - 1];
         request.date = Date.now();
         request.completed = false;
         if ($scope.user.number === undefined){
@@ -615,7 +608,6 @@ angular.module("sportsStoreAdmin")
         var newrequest2 = new Requests(request);
         newrequest2.$save().then(function (newrequest) {
             newrequest.responds = [];
-            newrequest.auto = auto;
             requesttonull();
             $rootScope.products.push(newrequest);
             Functions.alertAnimate($("#a-request-new"));
@@ -623,7 +615,7 @@ angular.module("sportsStoreAdmin")
                 email: "info@lookprice.ru",
                 username: "Партнер",
                 subject: 'Появилась новая заявка',
-                html: "Тип заявки: "+request.type+"; Автомобиль: "+auto.mark+" Email: "+$scope.user.email
+                html: "Тип заявки: "+request.type+ " Email: "+$scope.user.email
             });
             $scope.allitems = 1;
             $scope.loading = false;
