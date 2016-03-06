@@ -1,4 +1,4 @@
-            angular.module("sportsStoreAdmin", ["ngRoute", "ngResource"])
+            angular.module("sportsStoreAdmin", ["ngRoute", "ngResource",'ui.bootstrap.datepicker',"ui.bootstrap.tpls"])
             .config(function ($routeProvider) {
 
                 $routeProvider.when("/login", {

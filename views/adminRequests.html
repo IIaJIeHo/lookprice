@@ -38,7 +38,7 @@
           </div>
           <div class="panel-body">
                 <form name="workForm{{$index+1}}" novalidate>
-                      <div class="panel panel-info" ng-repeat="subtype in type" ng-init="parentIndex = $index">
+                      <div class="panel panel-info" ng-repeat="subtype in type" ng-init="parentIndex = $index" ng-class="{'nosubtype':!subtype.title}">
                             <div class="panel-heading" role="tab" id="mend{{$index+1}}" ng-if="subtype.title">
                                 <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" data-target="#colmend{{$index+1}}" aria-expanded="false" aria-controls="colmend{{$index+1}}">
                                 <h4 class="panel-title">
@@ -61,53 +61,80 @@
                                 </div>
                                 </div>
                         </div>
+                    </div>
                         <div class="form-group comment-area"><label>ЧТО НУЖНО СДЕЛАТЬ:</label><textarea class="form-control" ng-model="mainproduct.details.comment" placeholder="Что нужно сделать?" rows="5"> </textarea></div>
-                        <div class="form-group" ng-class="{'has-error': errorfile}">
-                            <label>Фото</label>
-                            <div class="row photo-cube">
-                                <div class="col-md-3" ng-repeat="i in mainproduct.details.image">
-                                    <a target="_blank" href="{{baseurl}}{{i}}"><img ng-dostyle="max-width:100%; border: 1px solid;" ng-src="{{baseurl}}{{i}}" /></a>
-                                    <a class="pointer" ng-click="deleteImage(i);" ng-show="startEdit">удалить</a>
+                        <div class="clearfix">
+                            <div class="form-group pull-left" ng-class="{'has-error': errorfile}">
+                                <label>Фото</label>
+                                <div class="row photo-cube">
+                                    <div class="col-md-3" ng-repeat="i in mainproduct.details.image">
+                                        <a target="_blank" href="{{baseurl}}{{i}}"><img ng-dostyle="max-width:100%; border: 1px solid;" ng-src="{{baseurl}}{{i}}" /></a>
+                                        <a class="pointer" ng-click="deleteImage(i);" ng-show="startEdit">удалить</a>
+                                    </div>
+                                </div>
+                                <input name="name" type='file' model='mainproduct.details.image' error='errorfile' ng-model='hello_file' file-feed multiple />
+                                <div ng-show="errorfile">
+                                    <span class="help-block" ng-show="errorfile == 'Toomuch'">Не более 4 файлов</span>
+                                    <span class="help-block" ng-show="errorfile == 'Toomuch1mb'">Каждый файл не более 1 мб</span>
+                                    <span class="help-block" ng-show="errorfile == 'Type'">Загружать можно только картинки</span>
                                 </div>
                             </div>
-                            <input name="name" type='file' model='mainproduct.details.image' error='errorfile' ng-model='hello_file' file-feed multiple ng-show="startEdit" />
-                            <div ng-show="errorfile">
-                                <span class="help-block" ng-show="errorfile == 'Toomuch'">Не более 4 файлов</span>
-                                <span class="help-block" ng-show="errorfile == 'Toomuch1mb'">Каждый файл не более 1 мб</span>
-                                <span class="help-block" ng-show="errorfile == 'Type'">Загружать можно только картинки</span>
+                            <div class="pull-right">      
+                                <ul class="checkbox-grid">
+                                <li>             
+                                    <label><input type="checkbox" ng-model="mainproduct.tohome" />
+                                    Выезд на дом</label>
+                                </li>
+                                </ul>
                             </div>
                         </div>
-                        <div class="form-group row">
-                        <ul class="checkbox-grid">
-                        <li>             
-                            <label><inputtype="checkbox" ng-model="mainproduct.tohome" />
-                            Выезд на дом</label>
-                        </li>
-                        </ul>
-                        <div class="form-group row">
-                        <ul class="checkbox-grid">
-                            <li>             
-                                <label ><input type="checkbox" ng-model="mainproduct.time[0]" />
-                                Утренее время</label>
-                            </li>
-                            <li>             
-                                <label ><input type="checkbox" ng-model="mainproduct.time[1]" />
-                                Дневное время</label>
-                            </li>
-                            <li>             
-                                <label ><input type="checkbox" ng-model="mainproduct.time[2]" />
-                                Вечернее время</label>
-                            </li>
-                            <li>             
-                                <label ><input type="checkbox" ng-model="mainproduct.time[3]" />
-                                Ночное время</label>
-                            </li>
-                        </ul>
-                    </div>
-                    </div>
+                        <div class="clearfix">
+                            <h4>Дата</h4>
+                            <div class="row pull-left">
+                              <div class="col-md-3">
+                                <p class="input-group">
+                                  <input type="text" class="form-control" uib-datepicker-popup ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                  <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                  </span>
+                                </p>
+                              </div>
+
+                              <div class="col-md-3">
+                                <p class="input-group">
+                                  <input type="text" class="form-control" uib-datepicker-popup ng-model="dt2" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                                  <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                  </span>
+                                </p>
+                              </div>
+                            </div>
+                            <div class="form-group row pull-right">
+                                <ul class="checkbox-grid">
+                                    <li>             
+                                        <label ><input type="checkbox" ng-model="mainproduct.time[0]" />
+                                        Утренее время</label>
+                                    </li>
+                                    <li>             
+                                        <label ><input type="checkbox" ng-model="mainproduct.time[1]" />
+                                        Дневное время</label>
+                                    </li>
+                                    <li>             
+                                        <label ><input type="checkbox" ng-model="mainproduct.time[2]" />
+                                        Вечернее время</label>
+                                    </li>
+                                    <li>             
+                                        <label ><input type="checkbox" ng-model="mainproduct.time[3]" />
+                                        Ночное время</label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </form>
+                <div class="text-center">
                 <button type="submit" ng-click="addRequest(mainproduct);" class="btn btn-primary">Опубликовать заявку</button>
+                </div>
             </div>
         </div>
     </div>

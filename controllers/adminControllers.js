@@ -129,9 +129,9 @@
     $scope.screens = ["Мои заявки","Автомобили","Оставить заявку","Редактирование профиля"];
     $scope.routes = [
     {path:"/main", name:"Мои заявки"},
-    {path:"/auto", name:"Автомобили"},
     {path:"/leaverequest", name:"Оставить заявку"},
-    {path:"/edit", name:"Редактирование профиля"}];
+    {path:"/edit", name:"Редактирование профиля"},
+    {path:"/edit", name:"Акции и Бонусы"}];
     $scope.subjects = Data.getSubjects();
     var w = angular.element($window);
     if ($(window).width() < 768){

@@ -120,8 +120,7 @@ button.close{
   margin:-5px 0 0 10px;
 }
 .choose-work{
-  background: #dce3eb;
-  max-width: 768px;
+  background: #fff;
   padding: 0 15px;
 }
 .choose-work h2{
@@ -137,12 +136,12 @@ button.close{
   background: #fff;
   text-align: center;
   text-transform: uppercase;
-  border-radius: 5px;
   max-width: 300px;
-  padding:15px 50px;
+  padding:15px 5px;
+  border: 1px solid #ccc;
 }
 .choose-work__wrap:hover{
-  border:3px solid #1d75bd;
+  border:3px solid #00a79d;
   cursor: pointer;
 }
 .choose-work__active{
@@ -1145,31 +1144,7 @@ button.close{
 button.close{
   margin:-5px 0 0 10px;
 }
-.choose-work{
-  background: #dce3eb;
-  max-width: 768px;
-}
-.choose-work h2{
-  text-transform: uppercase;
-  font-size: 30px;
-}
-.choose-work p{
-  text-align: center;
-  padding:10px 0;
-}
-.choose-work__wrap{
-  margin:0 auto;
-  background: #fff;
-  text-align: center;
-  text-transform: uppercase;
-  border-radius: 5px;
-  max-width: 300px;
-  padding:15px 20px;
-}
-.choose-work__wrap:hover{
-  border:3px solid #1d75bd;
-  cursor: pointer;
-}
+
 .container{
   min-width: 0px;
 }
@@ -1758,7 +1733,6 @@ ul.checkbox-grid{
 	}
 	#accordion{
 	    max-width:768px;
-	    padding:25px 0;
 	    margin:0 auto;
 	}
 	.well, .panel .panel{
@@ -1996,16 +1970,47 @@ ul.checkbox-grid{
 
 
 
-.button-menu button{
+.button-menu button.btn{
   width:100%;
+  text-align: left;
+  position: relative;
+  background: #9aa6b6;
+  color: white;
+  margin: 2px 0;
+  border: none;
+  box-shadow: none;
+}
+
+.button-menu button.btn.active{
+  background: #53bbbc;
+}
+
+.button-menu i{
+  position: absolute;
+}
+.button-menu button span{
+  padding-left:27px;
 }
 .panel-info{
   border-color: #00A79D;
+}
+.panel-info.nosubtype{
+  border-color:transparent;
+  margin-top:0 !important;
 }
 .panel-info > .panel-heading{
   background-color:#00a79d;
   border-color:#00a79d;
 }
+
+.panel-password{
+  border-color: #27aae2;
+}
+.panel-password > .panel-heading{
+  background-color:#27aae2;
+  border-color:#27aae2;
+}
+
 .b-product{
   display: flex;
   height: auto;
@@ -2020,4 +2025,91 @@ ul.checkbox-grid{
   width:225px;
   padding: 10px;
   transition: all .5s;
+}
+
+.top-back-site{
+  border-bottom: 2px solid rgb(240, 90, 41);
+  padding: 3px 0px;
+}
+
+.top-back-site a{
+  position: relative;
+  color: grey;
+}
+
+.top-back-site span{
+  position: absolute;
+  top: 2px;
+  left: -22px;
+}
+
+.top-logo-head{
+  padding:20px 6px;
+}
+
+.top-logo-head > div{
+  position: relative;
+  margin-top:30px;
+}
+
+.top-logo-head > div:last-child span{
+  color:#00a79d;
+}
+
+.top-logo-head span.sprite{
+  position: absolute;
+  top: -2px;
+  left: -23px;
+}
+
+.top-wrapper{
+  border-top:10px solid #ddd;
+  background-color: #eee;
+  padding-top:30px;
+}
+
+.navbar{
+  margin-bottom: 0;
+}
+
+.b-bonus{
+  background: white;
+  padding: 10px 0;
+}
+
+.b-bonus p{
+  text-align: left;
+  margin: 0.8em;
+}
+
+.header-for .pull-left{
+  position: relative;
+  padding-left:25px;
+}
+
+.header-for .pull-left p{
+  font-size:19px;
+  text-transform: uppercase;
+}
+
+.header-for .pull-left span{
+  position: absolute;
+  top:-3px;
+  left:0;
+}
+
+.header-for .pull-right{
+  min-width: 300px;
+}
+
+.sort-names th{
+  background: #bcc3c9;
+}
+
+.sort-names th a{
+  color: #647684;
+}
+
+.table-lookprice td{
+  background: #fff;
 }

@@ -25,28 +25,27 @@
         <strong>Поздравляем! </strong>
         Вы возобновили заявку {{updatedRequest.name}}!
     </div>
-
-    <table id="productTable" class="table table-hover table-responsive mobile-request-hide" ng-if="allitems" >
+    <div class="header-for">
+        <div class="pull-left">
+            <p><span class="sprite sprite-zayavka"></span>Заявка</p>
+        </div>
+        <div class="pull-right">
+            <div class="input-group search-form input-group-xs">
+              <input type="text" class="form-control" ng-model="query" placeholder="Поиск">
+              <div class="input-group-addon"><i class="fa fa-search"></i></div>
+            </div>
+        </div>
+    </div>
+    <table id="productTable" class="table table-hover table-responsive mobile-request-hide table-bordered table-lookprice" ng-if="allitems" >
         <tr class="sort-names">
-            <th><a href="" ng-click="order('type')">Тип <i class="fa" ng-show="predicate === 'type'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'type'" ></i></a></th>
-
-            <th><a href="" ng-click="order('name')">Номер заявки <i class="fa" ng-show="predicate === 'name'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'name'" ></i> </a></th>
-            <th><a href="" ng-click="order('details.comment')">Комментарий <i class="fa" ng-show="predicate === 'details.comment'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'details.comment'" ></i></a></th>
+            <th><a href="" ng-click="order('type')">Заявка<i class="fa" ng-show="predicate === 'type'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'type'" ></i></a></th>
+            <th><a href="" ng-click="order('details.comment')">Комментарий<i class="fa" ng-show="predicate === 'details.comment'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'details.comment'" ></i></a></th>
             <th><a href="" ng-click="order('responds.length')">Кол-во откликов <i class="fa" ng-show="predicate === 'responds.length'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'responds.length'" ></i></a></th>
-
-            <th><a href="" ng-click="order('date')">Время <i class="fa" ng-show="predicate === 'date'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'date'" ></i></a></th>
-            <th class="relative-wrap"> 
-                <div class="absolute-wrap search-wrap">
-                    <div class="input-group search-form input-group-xs">
-                      <input type="text" class="form-control" ng-model="query" placeholder="Поиск">
-                      <div class="input-group-addon"><i class="fa fa-search"></i></div>
-                    </div>
-                </div>
-            </th>
+            <th><a href="" ng-click="order('date')">Дата <i class="fa" ng-show="predicate === 'date'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'date'" ></i></a></th>
+            <th><a href="">Управление</a></th>
         </tr>
         <tr ng-repeat="item in products | filter:query | orderBy:predicate:reverse" ng-class="{'success':item.completed}" >
-            <td ng-click="viewItem(item)"><span class="fa__type" ng-class="{'to': item.type == 'Заявка на ТО', 'kuzov': item.type == 'Кузовные работы', 'remont': item.type == 'Заявка на Ремонт','tuning': item.type == 'Заявка на тюнинг'}"></span>{{item.type}}</td>
-            <td ng-click="viewItem(item)">{{item.name}}</td>
+            <td ng-click="viewItem(item)"><span class="fa__type" ng-class="{'to': item.type == 'Заявка на ТО', 'kuzov': item.type == 'Кузовные работы', 'remont': item.type == 'Заявка на Ремонт','tuning': item.type == 'Заявка на тюнинг'}"></span>{{item.type}} - {{item.name}}</td>
             <td ng-click="viewItem(item)" class="details">{{item.details.comment}}</td>
             <td ng-click="viewItem(item)" class="amount-responds"><span>{{item.responds.length}}</span></td>
             <td ng-click="viewItem(item)" class="date">{{formatDate(item.date)}}</td>
