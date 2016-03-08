@@ -1,5 +1,5 @@
-#productTable { width: auto; }
-#productTable td { max-width: 150px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; }
+
+#productTable td { text-overflow: ellipsis; overflow: hidden; white-space: nowrap; vertical-align: middle;}
 #productTable td input { max-width: 125px; }
     .sortOrder:after{
         content: "\25b2";
@@ -98,7 +98,8 @@ box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075);
 .btn-fixed{
 	position: fixed;
 	top: 165px;
-	margin-left: 18px;
+	margin-left: -15px;
+  border-radius: 0;
 }
 .answers{
 	float:right;
@@ -106,9 +107,6 @@ box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075);
 }
 .row-hover .col-lg-3,.row-hover .col-lg-2{
 	height:60px;
-}
-.row-hover .btn{
-	border-radius:5px;
 }
 .row-hover:hover{
 	cursor:pointer;
@@ -166,6 +164,27 @@ button.close{
   background-color: #DE4F20;
   border-color: #DE4F20;
 }
+
+.btn-publish {
+  color: #ffffff;
+  background-color: #00a79d;
+  border-color: #00a79d;
+  border-radius: 3px;
+  padding: 10px;
+  margin: 0 0 25px;
+}
+
+.btn-publish:hover,
+.btn-publish:focus,
+.btn-publish:active,
+.btn-publish.active,
+.open .dropdown-toggle.btn-publish {
+  color: #ffffff;
+  background-color: #068f86;
+  border-color: #068f86;
+}
+
+
 
 .btn-primary.disabled, .btn-primary[disabled], fieldset[disabled] .btn-primary, .btn-primary.disabled:hover, .btn-primary[disabled]:hover, fieldset[disabled] .btn-primary:hover, .btn-primary.disabled:focus, .btn-primary[disabled]:focus, fieldset[disabled] .btn-primary:focus, .btn-primary.disabled.focus, .btn-primary.focus[disabled], fieldset[disabled] .btn-primary.focus, .btn-primary.disabled:active, .btn-primary[disabled]:active, fieldset[disabled] .btn-primary:active, .btn-primary.disabled.active, .btn-primary.active[disabled], fieldset[disabled] .btn-primary.active{
   background-color: #ec5929;
@@ -397,6 +416,7 @@ button.close{
   width: 31px;
   height: 26px;
   background-position: -1133px -826px;
+  margin-bottom: -5px;
 }
 
 .sprite-play {
@@ -543,7 +563,7 @@ button.close{
     width: 100%;
     height: 100%;
     z-index: 1000;
-    background: rgba(9,58,200,0.3);
+    background: rgba(231, 255, 0, 0.3);
 }
 #loader {
     display: block;
@@ -569,7 +589,7 @@ button.close{
     bottom: 5px;
     border-radius: 50%;
     border: 3px solid transparent;
-    border-top-color: #e74c3c;
+    border-top-color: #F05A29;
     -webkit-animation: spin 3s linear infinite; /* Chrome, Opera 15+, Safari 5+ */
       animation: spin 3s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
 }
@@ -583,11 +603,15 @@ button.close{
     bottom: 15px;
     border-radius: 50%;
     border: 3px solid transparent;
-    border-top-color: #f9c922;
+    border-top-color: #3DB5D8;
     -webkit-animation: spin 1.5s linear infinite; /* Chrome, Opera 15+, Safari 5+ */
       animation: spin 1.5s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
 }
  
+.well{
+  max-width: 768px;
+  margin: 0 auto;
+}
 @-webkit-keyframes spin {
     0%   {
         -webkit-transform: rotate(0deg);  /* Chrome, Opera 15+, Safari 3.1+ */
@@ -662,7 +686,6 @@ button.close{
     }
     #productTable td.amount-responds{
       text-align: center;
-      position: relative;
       vertical-align:middle;
     }
     .autoservice__view, .autoservice__name, .autoservice__metro{
@@ -683,13 +706,26 @@ button.close{
       overflow: hidden;
       white-space: nowrap;
     }
-    .amount-responds span{
-      z-index:2;
-      color:#333;
+    .numberofresponds{
       position: relative;
-      z-index:10;
+      color:white;
+      font-size: 16px;
+      z-index: 2;
     }
-    .amount-responds:after{
+    .numberofresponds:before{
+      position: absolute;
+      content: '';
+      width: 40px;
+      height: 40px;
+      background: rgb(240, 90, 41);
+      top: -20px;
+      margin-left: 50%;
+      border-radius: 53px;
+      z-index: -1;
+      left: -20px;
+      margin-top: 107%;
+    }
+    /*.amount-responds:after{
       position: absolute;
       content: '';
       width:25px;
@@ -700,7 +736,7 @@ button.close{
       left:50%;
       z-index:0;
       margin-left: -12.6px;
-    }
+    }*/
     .comment-area{
       background: #3DB5D8;
       padding:9px 17px;
@@ -776,13 +812,13 @@ button.close{
       text-align: center;
     }
     .row-hover:not(:first-child){
-      border-top:2px solid #3c9a5f;
+      border-top:1px solid #eee;
     }
     .row-hover > div:not(:nth-child(5)){
-      border-right:2px solid #3c9a5f;
+      border-right:1px solid #eee;
     }
     .row-hover > div:nth-child(6n){
-      border-top:2px solid #3c9a5f;
+      border-top:1px solid #eee;
       border-right: none !important;
     }
     .row-hover > div{
@@ -1050,6 +1086,10 @@ ul.checkbox-grid{
 .panel-success .panel-title{
   color: #fff;
 }
+.panel-success{
+  border-color:#eee;
+  box-shadow: none;
+}
 .panel-warning .panel-title{
   color: #fff;
 }
@@ -1063,14 +1103,12 @@ ul.checkbox-grid{
   text-decoration:none;
 }
 .btn-fixed{
-  position: fixed;
-  top: 165px;
-  margin-left: 18px;
   z-index: 10;
 }
 .answers{
   float:right;
   margin-right:5px;
+  margin-top:3px;
 }
 .bordered{
 	padding: 15px;
@@ -1116,7 +1154,7 @@ ul.checkbox-grid{
 	height:60px;
 }
 .row-hover .btn{
-	border-radius:5px;
+	border-radius:0;
 }
 .row-hover:hover{
 	cursor:pointer;
@@ -1124,10 +1162,13 @@ ul.checkbox-grid{
 button.close{
   margin:-5px 0 0 10px;
 }
+.respond-status{
+  text-align: center;
+}
 .respond-status span{
-	color:white;
-	padding:3px 7px;
-	border-radius:5px;
+	color: white;
+	padding: 5px 8px;
+  font-size: 18px;
 }
 .success-status{
 	background:#019444;
@@ -1147,58 +1188,6 @@ button.close{
 
 .container{
   min-width: 0px;
-}
-
-#loader-wrapper {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1000;
-    background: rgba(9,58,200,0.3);
-}
-#loader {
-    display: block;
-    position: relative;
-    left: 50%;
-    top: 50%;
-    width: 150px;
-    height: 150px;
-    margin: -75px 0 0 -75px;
-    border-radius: 50%;
-    border: 3px solid transparent;
-    border-top-color: #3498db;
-    -webkit-animation: spin 2s linear infinite; /* Chrome, Opera 15+, Safari 5+ */
-    animation: spin 2s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
-}
- 
-#loader:before {
-    content: "";
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    right: 5px;
-    bottom: 5px;
-    border-radius: 50%;
-    border: 3px solid transparent;
-    border-top-color: #e74c3c;
-    -webkit-animation: spin 3s linear infinite; /* Chrome, Opera 15+, Safari 5+ */
-      animation: spin 3s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
-}
- 
-#loader:after {
-    content: "";
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    right: 15px;
-    bottom: 15px;
-    border-radius: 50%;
-    border: 3px solid transparent;
-    border-top-color: #f9c922;
-    -webkit-animation: spin 1.5s linear infinite; /* Chrome, Opera 15+, Safari 5+ */
-      animation: spin 1.5s linear infinite; /* Chrome, Firefox 16+, IE 10+, Opera */
 }
  
 @-webkit-keyframes spin {
@@ -1251,13 +1240,8 @@ button.close{
       text-align: center;
       position: relative;
     }
-    .amount-responds span{
-      z-index:2;
-      color:#333;
-      position: relative;
-      z-index:10;
-    }
-    .amount-responds:after{
+
+    /*.amount-responds:after{
       position: absolute;
       content: '';
       width:25px;
@@ -1268,10 +1252,8 @@ button.close{
       left:50%;
       z-index:0;
       margin-left: -12px;
-    }
-    .user-class .amount-responds:after{
-      top:12px;
-    }
+    }*/
+
     .comment-area{
       background: #3DB5D8;
       padding:9px 17px;
@@ -1322,15 +1304,18 @@ button.close{
     .row-hover:hover > div{
       background:#F5F5F5;
     }
+    .row-title{
+      border-top:6px solid #eee;
+    }
     .row-title > div{
       padding:15px 5px;
       text-align: center;
     }
     .row-hover:not(:first-child){
-      border-top:2px solid #3c9a5f;
+      border-top:1px solid #eee;
     }
     .row-hover > div:not(:nth-child(4)){
-      border-right:2px solid #3c9a5f;
+      border-right:1px solid #eee;
     }
     .row-hover > div:last-child{
       /*border-top:2px solid #3c9a5f;*/
@@ -1504,8 +1489,8 @@ input[switch="warning"]:checked + label:before {
   font-weight: 300;
 }
 .btn-icons{
-  width:27px;
-  height:27px;
+  width:31px;
+  height:31px;
   float:left;
 }
 .panel-info.panel-request{
@@ -1731,14 +1716,6 @@ ul.checkbox-grid{
 	  font-family:'Roboto';
 	  font-weight: 300;
 	}
-	#accordion{
-	    max-width:768px;
-	    margin:0 auto;
-	}
-	.well, .panel .panel{
-	    margin:0 auto;
-	    max-width: 768px;
-	}
 	.requests{
 		padding-top:15px;
 	}
@@ -1749,10 +1726,6 @@ ul.checkbox-grid{
         *{
     	  font-family:'Roboto';
     	  font-weight: 300;
-    	}
-    	.well, .panel .panel{
-    	    margin:0 auto;
-    	    max-width: 768px;
     	}
     	#productTable{
     		width:100%;
@@ -1815,13 +1788,7 @@ ul.checkbox-grid{
   padding: 5px;
   margin: 5px;
 }
-.mobile-request .amount-responds{
-  padding-right: 13px;
-}
-.mobile-request .amount-responds:after{
-  top: -2px;
-  left: 4px;
-}
+
 
 .navbar-nav{
   float:right;
@@ -1889,10 +1856,7 @@ ul.checkbox-grid{
   .container > .navbar-header{
     float:left;
   }
-  .mobile-request .amount-responds:after{
-    top: -2px;
-    left: 4px;
-  }
+
 }
 @media (max-width: 992px) { 
   .choose-work__wrap{
@@ -2112,4 +2076,66 @@ ul.checkbox-grid{
 
 .table-lookprice td{
   background: #fff;
+}
+
+
+.b-first-block > .pull-right, .b-second-block > .pull-right{
+    border: 1px solid rgb(204, 204, 204);
+    position: relative;
+    border-radius: 4px;
+    padding: 20px 5px 20px 30px;
+}
+
+.b-second-block > .pull-right{
+  width:40%;
+  max-width: 210px;
+}
+
+.b-second-block > .pull-left{
+  width:60%;
+}
+
+.b-second-block > .pull-left .input-group-btn > .btn{
+  background: transparent;
+  padding: 3px 4px 0px;
+}
+
+.b-second-block > .pull-left .input-group-btn{
+  vertical-align: top;
+}
+
+.b-first-block > .pull-right i, .b-second-block > .pull-right i{
+  position: absolute;
+  top: 12px;
+  left: 8px;
+}
+
+.b-second-block > .pull-right i{
+  top:43px;
+}
+
+.b-first-block > .pull-right li, .b-second-block > .pull-right li{
+  width:100%;
+}
+
+.b-second-block .col-md-6 > p:first-child{
+  float:left;
+  padding: 8px;
+}
+
+.table-type, .table-name{
+  float:left;
+  width:75%;
+  margin-left: 5px;
+  margin-bottom: -3px;
+}
+
+.table-name{
+  text-transform: uppercase;
+  font-size: 15px;
+}
+
+.table-type{
+  font-size: 14px;
+  color: rgb(240, 90, 41);
 }

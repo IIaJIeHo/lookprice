@@ -36,7 +36,7 @@
     $scope.salon_types = Data.getSalonTypes();
     $scope.logout = function(){
         $rootScope.userid = undefined;
-        document.cookie = "autoid=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+        document.cookie = "autolookid=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
         $rootScope.products = null;
         $scope.listProducts();
     }
@@ -60,7 +60,7 @@
     $scope.listProducts = function () {
         $scope.loading = true; 
         if ($rootScope.userid == undefined){
-            $rootScope.userid = Functions.getCookie('autoid');
+            $rootScope.userid = Functions.getCookie('autolookid');
         }
         if ($rootScope.userid == undefined){
             $location.path("/login");
@@ -79,7 +79,9 @@
                 console.log("cache");
             }
             else{
+            console.log($rootScope.userid);
             Autoservices.getById($rootScope.userid).then(function(autoservice){
+                console.log("dfdf1");
                 $scope.autoservice = autoservice;
                 if (autoservice.subjects != undefined){
                     $scope.subjects = Data.getSubjects();
@@ -99,6 +101,7 @@
                 }
                 $scope.autoservice.id = $scope.autoservice._id.$oid;
                 $rootScope.autoservice = $scope.autoservice;
+                console.log("dfdf");
                     Requests.query().then(function(data){
                         var temp_time = $scope.autoservice.date - 30*1000*60*60*24;
                         data = data.filter(function(product){
@@ -113,6 +116,10 @@
                         }
 
                         $scope.products = data;
+                        angular.forEach($scope.products, function(value, key) {
+                            value.start = new Date(value.start);
+                            value.end = new Date(value.end);
+                        });
                         Autos.query().then(function(auto_data){
                             $scope.autos = auto_data;
                             angular.forEach($scope.products, function(value, key) {
@@ -148,7 +155,8 @@
                             $rootScope.responds = $scope.responds;
                             $scope.loading = false; 
                     });
-                    $rootScope.products = $scope.products;    
+                    $rootScope.products = $scope.products;  
+                    $scope.loading = false;  
                     });
             });
 

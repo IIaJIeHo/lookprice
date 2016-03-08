@@ -21,7 +21,7 @@
                 if (user[0].password == window.md5(pass)){
                     $location.path("/main");
                     $rootScope.userid = user[0]._id.$oid;
-                    Functions.setCookie("userid", $rootScope.userid, {expires: new Date(new Date().getTime() + 60 * 10000000), path: '/'});            
+                    Functions.setCookie("userlookid", $rootScope.userid, {expires: new Date(new Date().getTime() + 60 * 10000000), path: '/'});            
                 }
                 else{
                     Functions.alertAnimate($("#a-user-password"));
@@ -37,7 +37,7 @@
             $location.path("/main");
         }
         else{
-            $rootScope.userid = Functions.getCookie('userid');
+            $rootScope.userid = Functions.getCookie('userlookid');
             if ($rootScope.userid != undefined){
                 $location.path("/main");
             }
@@ -170,6 +170,10 @@
         $location.path($scope.routes[index].path);
         Requests.query({userid: $rootScope.userid}).then(function(data){
             $scope.products = data;
+            angular.forEach($scope.products, function(value, key) {
+                value.start = new Date(value.start);
+                value.end = new Date(value.end);
+            });
             Autos.query({userid: $rootScope.userid}).then(function(auto_data){
                 $scope.autos = auto_data;
                 angular.forEach($scope.products, function(value, key) {

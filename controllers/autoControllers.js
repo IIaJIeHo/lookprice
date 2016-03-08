@@ -12,7 +12,7 @@
                     $location.path("/main");
                     $rootScope.userid = user[0]._id.$oid;
                     var date = new Date(new Date().getTime() + 60 * 10000000);
-                    document.cookie = "autoid="+user[0]._id.$oid+"; path=/; expires=" + date.toUTCString();                
+                    document.cookie = "autolookid="+user[0]._id.$oid+"; path=/; expires=" + date.toUTCString();                
                 }
                 else{
                     Functions.alertAnimate($("#a-user-password"));
@@ -30,7 +30,7 @@
                 $location.path("/main");
             }
             else{
-                $rootScope.userid = Functions.getCookie('autoid');
+                $rootScope.userid = Functions.getCookie('autolookid');
                 if ($rootScope.userid != undefined){
                     $location.path("/main");
                 }
@@ -162,6 +162,7 @@
             $rootScope.subjects = $scope.subjects;
             $rootScope.autoservice = $scope.autoservice;
                 Requests.query().then(function(data){
+
                     var temp_time = $scope.autoservice.date - 30*1000*60*60*24;
                     data = data.filter(function(product){
                         return product.date > temp_time;
@@ -174,6 +175,10 @@
                         });
                     }
                     $scope.products = data;
+                    angular.forEach($scope.products, function(value, key) {
+                        value.start = new Date(value.start);
+                        value.end = new Date(value.end);
+                    });
                     Autos.query().then(function(auto_data){
                         $scope.autos = auto_data;
                         angular.forEach($scope.products, function(value, key) {

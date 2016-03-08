@@ -1,22 +1,27 @@
-﻿<div ng-controller="mainCtrl">
-<nav class="navbar mynav" >
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="#"><img src="images/logo.png"></a>
+﻿<div class="text-center top-back-site"><a href="http://lookprice.ru/" target="_blank"><span class="sprite sprite-na-sait"></span>Вернуться на сайт</a></div>
+<nav class="navbar" ng-controller="mainCtrl">
+      <div class="container" ng-controller="productCtrl">
+        <div class="row text-center top-logo-head">
+          <div class="pull-left" ><span ng-show="autoservice.gender" class="sprite sprite-user-man"></span><span ng-show="!autoservice.gender" class="sprite sprite-user-girl"></span>Привет, {{autoservice.name}}!</div>
+          <img src="images/logo.png">
+          <div class="pull-right"><span class="btn-link" ng-click="logout();"><span class="sprite sprite-vixod"></span> Выход</span></div>
         </div>
-        <div id="navbar" class="navbar-collapse" >
-          <div class="link-backtosite"><a href="http://lookprice.ru/" target="_blank">Вернуться на сайт</a></div>
-          <ul class="nav navbar-nav navbar-right">
-            <li ng-controller="productCtrl">Привет, {{autoservice.name}}! <span class="btn-link" ng-click="logout();" style="cursor:pointer;">Выход</span></li>
-          </ul>
-        </div><!--/.nav-collapse -->
       </div>
     </nav>
+<div class="top-wrapper">
 <div class="container" ng-controller="mainCtrl">
 <div class="toggle-menu" ng-click="ToggleNav()">Меню</div>
   <div class="row main-panel user-class">
         <div class="col-sm-3 button-menu">
-          <button href="" class="btn btn-default" ng-repeat="item in routes" aria-controls="home" role="tab" data-toggle="tab" ng-click="setScreen($index)" ng-show="$parent.shownav" ng-class="{'active': (item.path == current) }"><i class="fa__text" ng-class="{'zayavka': ($index == 0) , 'big-otvet': ($index == 1), 'redakt-profile': ($index == 2) }"></i>{{item.name}}</button>
+            <div class="button-menu">
+              <button href="" class="btn btn-default" ng-repeat="item in routes" aria-controls="home" role="tab" data-toggle="tab" ng-click="setScreen($index)" ng-show="$parent.shownav" ng-class="{'active': (item.path == current) }"><i class="sprite" ng-class="{'sprite-moi-zayavki': ($index == 0) , 'sprite-ostavit-zayavku': ($index == 1), 'sprite-redakt-profile': ($index == 2), 'sprite-bonus': ($index == 3) }"></i><span>{{item.name}}</span></button>
+            </div>
+            <div class="text-center b-bonus">
+              <img src="images/krug.png"/>
+              <p>Вы получаете предложения только от наших партнеров, предложение будет включать в себя стоимость и примерный срок проведения ремонтных работ автомобиля или подробную информацию по проведению ТО</p>
+              <p>Вы получаете предложения только от наших партнеров, предложение будет включать в себя стоимость и примерный срок проведения ремонтных работ автомобиля или подробную информацию по проведению ТО</p>
+              <img src="images/banner_left.png" />
+            </div>
         </div>
         <div class="col-sm-9">
           <div ng-include="'views/autoProducts.html'" ng-show="mainView"/></div>

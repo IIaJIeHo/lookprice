@@ -13,10 +13,7 @@
         <div class="row visible-sm visible-xs">
             <div class="col-sm-12">
                 <select class="form-control" id="chooserequest" ng-model="chosenRequest" ng-change="changeRequest()">
-                    <option value='1'>Заявка на ТО</option>
-                    <option value='2'>Заявка на ремонт</option>
-                    <option value='3'>Заявка на кузовные работы</option>
-                    <option value='4'>Заявка на тюнинг</option>
+                    <option ng-repeat="item in request_types" value='{{$index+1}}'>{{request_types[$index]}}</option>
                 </select>
             </div>
         </div>
@@ -63,7 +60,7 @@
                         </div>
                     </div>
                         <div class="form-group comment-area"><label>ЧТО НУЖНО СДЕЛАТЬ:</label><textarea class="form-control" ng-model="mainproduct.details.comment" placeholder="Что нужно сделать?" rows="5"> </textarea></div>
-                        <div class="clearfix">
+                        <div class="clearfix b-first-block">
                             <div class="form-group pull-left" ng-class="{'has-error': errorfile}">
                                 <label>Фото</label>
                                 <div class="row photo-cube">
@@ -79,7 +76,8 @@
                                     <span class="help-block" ng-show="errorfile == 'Type'">Загружать можно только картинки</span>
                                 </div>
                             </div>
-                            <div class="pull-right">      
+                            <div class="pull-right">  
+                                <i class="sprite sprite-master-na-dom" ></i>    
                                 <ul class="checkbox-grid">
                                 <li>             
                                     <label><input type="checkbox" ng-model="mainproduct.tohome" />
@@ -88,28 +86,33 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="clearfix">
-                            <h4>Дата</h4>
+                        <div class="clearfix b-second-block">
+                            <h4><i class="sprite sprite-udobnoe-vremya"></i> Удобное время</h4>
                             <div class="row pull-left">
-                              <div class="col-md-3">
+                              <div class="col-md-6">
+                              <p>с</p>
                                 <p class="input-group">
-                                  <input type="text" class="form-control" uib-datepicker-popup ng-model="dt" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                                
                                   <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                    <button type="button" class="btn btn-default" ng-click="open1()"><i class="sprite sprite-calendar"></i></button>
                                   </span>
+                                  <input type="text" class="form-control" uib-datepicker-popup ng-model="mainproduct.start" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
                                 </p>
                               </div>
 
-                              <div class="col-md-3">
+                              <div class="col-md-6">
+                              <p>до</p>
                                 <p class="input-group">
-                                  <input type="text" class="form-control" uib-datepicker-popup ng-model="dt2" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                                
                                   <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                                    <button type="button" class="btn btn-default" ng-click="open2()"><i class="sprite sprite-calendar"></i></button>
                                   </span>
+                                  <input type="text" class="form-control" uib-datepicker-popup ng-model="mainproduct.end" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
                                 </p>
                               </div>
                             </div>
-                            <div class="form-group row pull-right">
+                            <div class="form-group pull-right">
+                                <i class="sprite sprite-udobnoe-vremya"></i>
                                 <ul class="checkbox-grid">
                                     <li>             
                                         <label ><input type="checkbox" ng-model="mainproduct.time[0]" />
@@ -132,10 +135,10 @@
                         </div>
                     </div>
                 </form>
-                <div class="text-center">
-                <button type="submit" ng-click="addRequest(mainproduct);" class="btn btn-primary">Опубликовать заявку</button>
-                </div>
             </div>
+        </div>
+        <div class="text-center">
+            <button type="submit" ng-click="addRequest(mainproduct);" class="btn btn-publish">Опубликовать заявку</button>
         </div>
     </div>
 

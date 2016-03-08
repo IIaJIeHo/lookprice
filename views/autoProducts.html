@@ -4,42 +4,34 @@
         <strong>Поздравляем! </strong>
         Вы добавили новую заявку!
     </div>
-<div ng-controller="productCtrl">
+<div ng-controller="productCtrl" class="partial-view">
     <div id="loader-wrapper" ng-if="loading">
         <div id="loader"></div>
     </div>
-    <table id="productTable" class="table table-striped table-bordered table-hover mobile-request-hide" ng-if="allitems" ng-init="check_complete = false;">
-        <tr class="sort-names">
-            <th><a href="" ng-click="order('type')">Тип  <i class="fa" ng-show="predicate === 'type'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'type'" ></i></a></th>
-            <th><a href="" ng-click="order('name')">Номер заявки  <i class="fa" ng-show="predicate === 'name'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'name'" ></i></a></th>
-            <th><a href="" ng-click="order('auto.mark')">Автомобиль  <i class="fa" ng-show="predicate === 'auto.mark'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'auto.mark'" ></i></a></th>
-            <th><a href="" ng-click="order('details.comment')">Комментарий  <i class="fa" ng-show="predicate === 'details.comment'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'details.comment'" ></i></a></th>
-            <th><a href="" ng-click="order('responds.length')">Кол-во предложений  <i class="fa" ng-show="predicate === 'responds.length'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'responds.length'" ></i></a></th>
-            <th><a href="" ng-click="order('date')">Время  <i class="fa" ng-show="predicate === 'date'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'date'" ></i></a></th>
-            <th><a href="" ng-click="order('completed')">Статус  <i class="fa" ng-show="predicate === 'completed'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'completed'" ></i></a></th>
-            <th style="display:none;"><div class="input-group search-form input-group-xs">
-            <div class="input-group-addon"><input type="checkbox" id="switch1" checked switch="none" ng-model="check_complete" /> 
-  <label for="switch1" data-on-label="Вкл" data-off-label="Выкл" ></label></div>
-              <input type="text" class="form-control" ng-model="query" placeholder="Поиск">
+    <div class="header-for" ng-show="allitems">
+        <div class="pull-left">
+            <p><span class="sprite sprite-zayavka"></span>Заявки</p>
+        </div>
+        <div class="pull-right">
+            <div class="input-group search-form input-group-xs">
+              <input type="text" class="form-control" ng-model="query" placeholder="Поиск заявки">
               <div class="input-group-addon"><i class="fa fa-search"></i></div>
             </div>
-            </th>
-            <th class="relative-wrap"> 
-                <div class="absolute-wrap search-wrap">
-                    <div class="input-group search-form input-group-xs">
-                      <input type="text" class="form-control" ng-model="query" placeholder="Поиск">
-                      <div class="input-group-addon"><i class="fa fa-search"></i></div>
-                    </div>
-                </div>
-            </th>
+        </div>
+    </div>
+    <table id="productTable" style="width:100%;" class="table table-lookprice table-bordered table-hover mobile-request-hide" ng-show="allitems" ng-init="check_complete = false;">
+        <tr class="sort-names">
+            <th><a href="" ng-click="order('type')">Заявка<i class="fa" ng-show="predicate === 'type'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'type'" ></i></a></th>
+            <th><a href="" ng-click="order('details.comment')">Комментарий<i class="fa" ng-show="predicate === 'details.comment'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'details.comment'" ></i></a></th>
+            <th><a href="" ng-click="order('responds.length')">Кол-во откликов <i class="fa" ng-show="predicate === 'responds.length'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'responds.length'" ></i></a></th>
+            <th><a href="" ng-click="order('date')">Дата <i class="fa" ng-show="predicate === 'date'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'date'" ></i></a></th>
+            <th><a href="" ng-click="order('completed')">Статус <i class="fa" ng-show="predicate === 'completed'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'date'" ></i></a></th>
         </tr>
         <tr ng-repeat="item in products | filter:query |orderBy:predicate:reverse" ng-click="viewItem(item)">
-            <td><span class="fa__type" ng-class="{'to': item.type == 'Заявка на ТО', 'kuzov': item.type == 'Кузовные работы', 'remont': item.type == 'Заявка на Ремонт','tuning': item.type == 'Заявка на тюнинг'}"></span>{{item.type}}</td>
-            <td>{{item.name}}</td>
-            <td>{{item.auto.mark}}</td>
-            <td class="details">{{item.details.comment}}</td>
-            <td class="amount-responds"><span>{{item.responds.length}}</span></td>
-            <td class="date">{{formatDate(item.date)}}</td>
+            <td ng-click="viewItem(item)"><span class="sprite pull-left" ng-class="{'sprite-m1': item.type == 'Ногтевой сервис', 'sprite-m2': item.type == 'Парикмахерские услуги', 'sprite-m3': item.type == 'Косметология','sprite-m4': item.type == 'Визаж','sprite-m5': item.type == 'Массаж' ,'sprite-m6': item.type == 'Татуаж'}"></span><div class="table-name">{{item.name}}</div><div class="table-type">{{item.type}}</div></td>
+            <td ng-click="viewItem(item)" class="details">{{item.details.comment}}</td>
+            <td ng-click="viewItem(item)" class="text-center"><span class="numberofresponds">{{item.responds.length}}</span></td>
+            <td ng-click="viewItem(item)" class="date">{{formatDate(item.date)}}</td>
             <td class="respond-status"><span ng-if="item.completed" class="success-status">Завершена</span><span ng-if="!item.completed" class="viewed-status">Активна</span></td>
         </tr>
     </table>
@@ -75,34 +67,6 @@
     </div>
     <table id="singleTable" class="table table-striped table-bordered table-hover" ng-if="!allitems">
     <div class="row" id="singleTable" class="table table-striped table-bordered table-hover" ng-if="!allitems">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-4">
-                    <button ng-click="viewItem(item)" class="btn btn-xs btn-primary btn-icons btn-fixed">
-                        <i class="fa fa-arrow-left"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="panel panel-default" ng-if="!startEdit">
-              <div class="panel-heading">
-                <h2 class="panel-title"><i class="big-car"></i>Данные автомобиля</h2>
-              </div>
-              <div class="row autodescription container-fluid">
-                <div class="col-md-4"><label>Марка</label><div>{{mainproduct.auto.mark || 'нет'}}</div> </div>
-                <div class="col-md-4"><label>Модель</label><div>{{mainproduct.auto.model || 'нет'}}</div> </div>
-                <div class="col-md-4"><label>Поколение</label><div>{{mainproduct.auto.generation || 'нет'}}</div> </div>
-                <div class="col-md-4"><label>Год</label><div>{{mainproduct.auto.year || 'нет'}}</div> </div>
-                <div class="col-md-4"><label>Тип двигателя</label><div>{{mainproduct.auto.engine || 'нет'}}</div> </div>
-                <div class="col-md-4"><label>Коробка</label><div>{{mainproduct.auto.box || 'нет'}}</div> </div>
-                <div class="col-md-4"><label>Мощность</label><div>{{mainproduct.auto.body || '0'}} л.с.</div> </div>
-                <div class="col-md-4"><label>Объем двигателя</label><div>{{mainproduct.auto.volume || '0'}} л.</div> </div>
-                <div class="col-md-4"><label>Цвет</label><div>{{mainproduct.auto.color || 'нет'}}</div> </div>
-                <div class="col-md-4"><label>Тип Кузова</label><div>{{mainproduct.auto.drive || 'нет'}}</div> </div>
-                <div class="col-md-4"><label>Пробег</label><div>{{mainproduct.auto.mileage || '0'}} км</div> </div>
-                <div class="col-md-4"><label>Vin</label><div>{{mainproduct.auto.vin || 'нет'}}</div> </div>
-                </div>
-            </div>
-        </div>
         <div class="container-fluid requests" ng-if="mainproduct.type == 'Заявка на ТО'">
             <div class="panel panel-info">
               <div class="panel-heading">
@@ -135,11 +99,11 @@
     <div id="request{{$index+1}}"  ng-repeat="type in salon_types" ng-if="mainproduct.type == requests[$index]" ng-init="rootIndex = $index">
         <div class="panel panel-info">
           <div class="panel-heading">
-            <h2 class="panel-title"><i class="sprite-kuzov-work"></i>{{request[$index]}}</h2>
+            <h2 class="panel-title"><i class="kuzov-work"></i>{{mainproduct.type}}</h2>
           </div>
           <div class="panel-body">
                 <form name="workForm{{$index+1}}" novalidate>
-                      <div class="panel panel-info" ng-repeat="subtype in type" ng-init="parentIndex = $index">
+                      <div class="panel panel-info" ng-repeat="subtype in type" ng-init="parentIndex = $index" ng-class="{'nosubtype':!subtype.title}">
                             <div class="panel-heading" role="tab" id="mend{{$index+1}}" ng-if="subtype.title">
                                 <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" data-target="#colmend{{$index+1}}" aria-expanded="false" aria-controls="colmend{{$index+1}}">
                                 <h4 class="panel-title">
@@ -161,7 +125,82 @@
                                     </div>
                                 </div>
                                 </div>
+                        </div>
+                    </div>
+                        <div class="form-group comment-area"><label>ЧТО НУЖНО СДЕЛАТЬ:</label><textarea class="form-control" ng-model="mainproduct.details.comment" placeholder="Что нужно сделать?" rows="5"> </textarea></div>
+                        <div class="clearfix b-first-block">
+                            <div class="form-group pull-left" ng-class="{'has-error': errorfile}">
+                                <label>Фото</label>
+                                <div class="row photo-cube">
+                                    <div class="col-md-3" ng-repeat="i in mainproduct.details.image">
+                                        <a target="_blank" href="{{baseurl}}{{i}}"><img ng-dostyle="max-width:100%; border: 1px solid;" ng-src="{{baseurl}}{{i}}" /></a>
+                                        <a class="pointer" ng-click="deleteImage(i);" ng-show="startEdit">удалить</a>
+                                    </div>
+                                </div>
+                                <input name="name" type='file' model='mainproduct.details.image' error='errorfile' ng-model='hello_file' file-feed multiple />
+                                <div ng-show="errorfile">
+                                    <span class="help-block" ng-show="errorfile == 'Toomuch'">Не более 4 файлов</span>
+                                    <span class="help-block" ng-show="errorfile == 'Toomuch1mb'">Каждый файл не более 1 мб</span>
+                                    <span class="help-block" ng-show="errorfile == 'Type'">Загружать можно только картинки</span>
+                                </div>
                             </div>
+                            <div class="pull-right">  
+                                <i class="sprite sprite-master-na-dom" ></i>    
+                                <ul class="checkbox-grid">
+                                <li>             
+                                    <label><input ng-disabled="!startEdit" type="checkbox" ng-model="mainproduct.tohome" />
+                                    Выезд на дом</label>
+                                </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="clearfix b-second-block">
+                            <h4><i class="sprite sprite-udobnoe-vremya"></i> Удобное время</h4>
+                            <div class="row pull-left">
+                              <div class="col-md-6">
+                              <p>с</p>
+                                <p class="input-group">
+                                
+                                  <span class="input-group-btn">
+                                    <button ng-disabled="!startEdit" type="button" class="btn btn-default" ng-click="open1()"><i class="sprite sprite-calendar"></i></button>
+                                  </span>
+                                  <input ng-disabled="!startEdit" type="text" class="form-control" uib-datepicker-popup ng-model="mainproduct.start" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                                </p>
+                              </div>
+
+                              <div class="col-md-6">
+                              <p>до</p>
+                                <p class="input-group">
+                                
+                                  <span class="input-group-btn">
+                                    <button ng-disabled="!startEdit" type="button" class="btn btn-default" ng-click="open2()"><i class="sprite sprite-calendar"></i></button>
+                                  </span>
+                                  <input type="text" ng-disabled="!startEdit" class="form-control" uib-datepicker-popup ng-model="mainproduct.end" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                                </p>
+                              </div>
+                            </div>
+                            <div class="form-group pull-right">
+                                <i class="sprite sprite-udobnoe-vremya"></i>
+                                <ul class="checkbox-grid">
+                                    <li>             
+                                        <label ><input type="checkbox" ng-disabled="!startEdit" ng-model="mainproduct.time[0]" />
+                                        Утренее время</label>
+                                    </li>
+                                    <li>             
+                                        <label ><input type="checkbox" ng-disabled="!startEdit" ng-model="mainproduct.time[1]" />
+                                        Дневное время</label>
+                                    </li>
+                                    <li>             
+                                        <label ><input type="checkbox" ng-disabled="!startEdit" ng-model="mainproduct.time[2]" />
+                                        Вечернее время</label>
+                                    </li>
+                                    <li>             
+                                        <label ><input type="checkbox" ng-disabled="!startEdit" ng-model="mainproduct.time[3]" />
+                                        Ночное время</label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
@@ -537,7 +576,7 @@
             </div>
         </div>
     </div> 
-<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" ng-if="!allitems">
+<div class="panel-group row" id="accordion" role="tablist" aria-multiselectable="true" ng-if="!allitems">
   <div class="panel panel-info panel-request" ng-hide="answered">
     <div class="panel-heading" role="tab" id="headingOne">
         <a role="button" data-toggle="collapse" data-parent="#accordion"  data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" ng-disabled="mainproduct.completed">
@@ -600,11 +639,12 @@
             </div>
             <div class="row row-hover" ng-repeat="item in activeresponds" ng-class="{'bg-success': item.approved}">
                 <div class="col-lg-4" ng-click="toogleAutoservice[$index] = !toogleAutoservice[$index];">
-                    <div class="autoservice__view"><span class="eye2"></span></div>
+                    <div class="autoservice__view"><span class="sprite sprite-metka"></span></div>
                     <div class="autoservice__name"><a target="_blank" title="{{item.autoservice.name}}" href="{{item.autoservice.link}}">{{item.autoservice.name}}</a></div>
                     <div class="autoservice__metro"><span class="metro"></span>{{item.autoservice.metro}}</div>
                 </div>
                 <div class="col-lg-2" ng-click="toogleAutoservice[$index] = !toogleAutoservice[$index];">
+                    <span class="sprite sprite-comment"></span>
                     Прочесть
                 </div>
                 <div class="col-lg-3" ng-click="toogleAutoservice[$index] = !toogleAutoservice[$index];">

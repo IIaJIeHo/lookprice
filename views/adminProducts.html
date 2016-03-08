@@ -1,9 +1,4 @@
-﻿<style>
-    #productTable td { max-width: 150px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap; }
-    #productTable td input { max-width: 125px; }
-</style>
-
-<div ng-controller="productCtrl" class="partial-view">
+﻿<div ng-controller="productCtrl" class="partial-view">
     <ng-spinner></ng-spinner>
     <div class="alert alert-success" id="a-request-edit" style="position:fixed;bottom:0;right:0;display:none;">
         <button type="button" class="close" data-dismiss="alert">x</button>
@@ -25,9 +20,9 @@
         <strong>Поздравляем! </strong>
         Вы возобновили заявку {{updatedRequest.name}}!
     </div>
-    <div class="header-for">
+    <div class="header-for" ng-show="allitems">
         <div class="pull-left">
-            <p><span class="sprite sprite-zayavka"></span>Заявка</p>
+            <p><span class="sprite sprite-zayavka"></span>Мои заявки</p>
         </div>
         <div class="pull-right">
             <div class="input-group search-form input-group-xs">
@@ -36,7 +31,7 @@
             </div>
         </div>
     </div>
-    <table id="productTable" class="table table-hover table-responsive mobile-request-hide table-bordered table-lookprice" ng-if="allitems" >
+    <table id="productTable" style="width:100%;" class="table table-hover table-responsive mobile-request-hide table-bordered table-lookprice" ng-show="allitems" >
         <tr class="sort-names">
             <th><a href="" ng-click="order('type')">Заявка<i class="fa" ng-show="predicate === 'type'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'type'" ></i></a></th>
             <th><a href="" ng-click="order('details.comment')">Комментарий<i class="fa" ng-show="predicate === 'details.comment'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'details.comment'" ></i></a></th>
@@ -45,9 +40,9 @@
             <th><a href="">Управление</a></th>
         </tr>
         <tr ng-repeat="item in products | filter:query | orderBy:predicate:reverse" ng-class="{'success':item.completed}" >
-            <td ng-click="viewItem(item)"><span class="fa__type" ng-class="{'to': item.type == 'Заявка на ТО', 'kuzov': item.type == 'Кузовные работы', 'remont': item.type == 'Заявка на Ремонт','tuning': item.type == 'Заявка на тюнинг'}"></span>{{item.type}} - {{item.name}}</td>
+            <td ng-click="viewItem(item)"><span class="sprite pull-left" ng-class="{'sprite-m1': item.type == 'Ногтевой сервис', 'sprite-m2': item.type == 'Парикмахерские услуги', 'sprite-m3': item.type == 'Косметология','sprite-m4': item.type == 'Визаж','sprite-m5': item.type == 'Массаж' ,'sprite-m6': item.type == 'Татуаж'}"></span><div class="table-name">{{item.name}}</div><div class="table-type">{{item.type}}</div></td>
             <td ng-click="viewItem(item)" class="details">{{item.details.comment}}</td>
-            <td ng-click="viewItem(item)" class="amount-responds"><span>{{item.responds.length}}</span></td>
+            <td ng-click="viewItem(item)" class="text-center"><span class="numberofresponds">{{item.responds.length}}</span></td>
             <td ng-click="viewItem(item)" class="date">{{formatDate(item.date)}}</td>
             <td class="active-buttons">
                 <button ng-click="viewItem(item)" class="btn" data-toggle="tooltip" title="Посмотреть">
@@ -119,9 +114,9 @@
     <div class="panel-heading" role="tab" id="headingTwo">
         <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
             <h4 class="panel-title">
-          <i class="otv-na-zayavku"></i> Ответы<span class="strelka3"></span><span class="answers">Ответов: {{activeresponds.length}}</span>
+          <i class="sprite sprite-otv-na-zayavku"></i> Ответы на вашу заявку<span class="strelka3"></span><span class="answers">Ответов: {{activeresponds.length}}</span>
           </h4>
-        </a>
+        </a> 
     </div>
     <div id="collapseTwo" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingTwo">
         <div class="container-fluid mobile-request-hide">
@@ -143,11 +138,12 @@
             </div>
             <div class="row row-hover" ng-repeat="item in activeresponds" ng-class="{'bg-success': item.approved}">
                 <div class="col-lg-4" ng-click="toogleAutoservice[$index] = !toogleAutoservice[$index];">
-                    <div class="autoservice__view"><span class="eye2"></span></div>
+                    <div class="autoservice__view"><span class="sprite sprite-metka"></span></div>
                     <div class="autoservice__name"><a target="_blank" title="{{item.autoservice.name}}" href="{{item.autoservice.link}}">{{item.autoservice.name}}</a></div>
                     <div class="autoservice__metro"><span class="metro"></span>{{item.autoservice.metro}}</div>
                 </div>
                 <div class="col-lg-2" ng-click="toogleAutoservice[$index] = !toogleAutoservice[$index];">
+                    <span class="sprite sprite-comment"></span>
                     Прочесть
                 </div>
                 <div class="col-lg-2" ng-click="toogleAutoservice[$index] = !toogleAutoservice[$index];">
@@ -157,7 +153,7 @@
                     {{formatDate(item.date)}}
                 </div>
                 <div class="col-lg-2 toogle-action">
-                    <button ng-class="{'btn-success': (!item.approved),'btn-danger': (item.approved)}" ng-click="approveItem(item,item.autoservice)" class="btn btn-xs">
+                    <button ng-class="{'btn-success': (!item.approved),'btn-danger': (item.approved)}" ng-click="approveItem(item,item.autoservice)" class="btn">
                                 <span ng-if="!item.approved">Принять</span>
                                 <span ng-if="item.approved">Отклонить</span>
                     </button>
@@ -203,69 +199,18 @@
         </div>
     </div>
 </div>
-            <div class="panel panel-default hidden" >
-                <div class="panel-heading">
-                <h2 class="panel-title"><i class="big-car"></i>Автомобиль</h2>
-              </div>
-              <div class="panel-body">
-                <form name="authForm" novalidate>
-                    <div class="form-group">
-                        <label>Выберите автомобиль</label>
-                        <select class="form-control" ng-model="mainproduct.auto" ng-options="auto.name for auto in autos"></select>
-                    </div>
-                </form>
-            </div>
-            </div>
-        </div>
-        <div class="container-fluid" ng-if="mainproduct.type == 'Заявка на ТО'">
-            <div class="panel panel-info">
-              <div class="panel-heading">
-                <h2 class="panel-title"><i class="kuzov-work"></i>Заявка на ТО</h2>
-              </div>
-              <div class="panel-body">
-                    <form name="workForm" novalidate>
-                        <div class="form-group"><label>Номер заявки:</label><input ng-disabled="!startEdit" class="form-control" type="text" ng-model="mainproduct.name" /></div>
-                        <div class="form-group row">
-                            <ul class="checkbox-grid">
-                            <li>             
-                                <label ng-hide="!startEdit && !mainproduct.details.ownparts"><input ng-disabled="!startEdit" type="checkbox" ng-model="mainproduct.details.ownparts" />
-                                Свои запчасти</label>
-                            </li>
-                            <li>
-                                <label ng-hide="!startEdit && !mainproduct.details.onguaranty"><input ng-disabled="!startEdit" type="checkbox" ng-model="mainproduct.details.onguaranty" />
-                                Автомобиль на гарантии</label>
-                            </li>
-                            </ul>
-                        </div>
-                        <div class="form-group row">
-                            <ul class="checkbox-grid">
-                            <li ng-repeat="item in texts.work">
-                                <label ng-hide="!startEdit && !mainproduct.details.work[$index]"><input ng-disabled="!startEdit" type="checkbox" ng-model="mainproduct.details.work[$index]" />
-                                {{item}}</label>
-                            </li>
-                            </ul>
-                        </div>
-                        <div class="form-group comment-area"><label>Комментарий:</label><textarea ng-disabled="!startEdit" class="form-control" ng-model="mainproduct.details.comment" placeholder="Расскажите подробнее о том, что у вас случилось" rows="5"> </textarea></div>
-                        <div ng-if="startEdit" class="text-center bottom-button">
-                            <button type="submit" ng-click="updateProduct(mainproduct)"
-                                    class="btn btn-primary">
-                                Обновить
-                            </button>
-                        </div>
-                    </form>
-              </div>
-            </div>
-        </div>
+
+
 
 
     <div id="request{{$index+1}}"  ng-repeat="type in salon_types" ng-if="mainproduct.type == requests[$index]" ng-init="rootIndex = $index">
         <div class="panel panel-info">
           <div class="panel-heading">
-            <h2 class="panel-title"><i class="sprite-kuzov-work"></i>{{request[$index]}}</h2>
+            <h2 class="panel-title"><i class="kuzov-work"></i>{{mainproduct.type}}</h2>
           </div>
           <div class="panel-body">
                 <form name="workForm{{$index+1}}" novalidate>
-                      <div class="panel panel-info" ng-repeat="subtype in type" ng-init="parentIndex = $index">
+                      <div class="panel panel-info" ng-repeat="subtype in type" ng-init="parentIndex = $index" ng-class="{'nosubtype':!subtype.title}">
                             <div class="panel-heading" role="tab" id="mend{{$index+1}}" ng-if="subtype.title">
                                 <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" data-target="#colmend{{$index+1}}" aria-expanded="false" aria-controls="colmend{{$index+1}}">
                                 <h4 class="panel-title">
@@ -287,16 +232,91 @@
                                     </div>
                                 </div>
                                 </div>
-                            </div>
+                        </div>
                     </div>
-                    <div ng-if="startEdit" class="text-center bottom-button">
-                        <button type="submit" ng-click="updateProduct(mainproduct)"
-                                class="btn btn-primary">
-                            Обновить
-                        </button>
+                        <div class="form-group comment-area"><label>ЧТО НУЖНО СДЕЛАТЬ:</label><textarea class="form-control" ng-model="mainproduct.details.comment" placeholder="Что нужно сделать?" rows="5"> </textarea></div>
+                        <div class="clearfix b-first-block">
+                            <div class="form-group pull-left" ng-class="{'has-error': errorfile}">
+                                <label>Фото</label>
+                                <div class="row photo-cube">
+                                    <div class="col-md-3" ng-repeat="i in mainproduct.details.image">
+                                        <a target="_blank" href="{{baseurl}}{{i}}"><img ng-dostyle="max-width:100%; border: 1px solid;" ng-src="{{baseurl}}{{i}}" /></a>
+                                        <a class="pointer" ng-click="deleteImage(i);" ng-show="startEdit">удалить</a>
+                                    </div>
+                                </div>
+                                <input name="name" type='file' model='mainproduct.details.image' error='errorfile' ng-model='hello_file' file-feed multiple />
+                                <div ng-show="errorfile">
+                                    <span class="help-block" ng-show="errorfile == 'Toomuch'">Не более 4 файлов</span>
+                                    <span class="help-block" ng-show="errorfile == 'Toomuch1mb'">Каждый файл не более 1 мб</span>
+                                    <span class="help-block" ng-show="errorfile == 'Type'">Загружать можно только картинки</span>
+                                </div>
+                            </div>
+                            <div class="pull-right">  
+                                <i class="sprite sprite-master-na-dom" ></i>    
+                                <ul class="checkbox-grid">
+                                <li>             
+                                    <label><input ng-disabled="!startEdit" type="checkbox" ng-model="mainproduct.tohome" />
+                                    Выезд на дом</label>
+                                </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="clearfix b-second-block">
+                            <h4><i class="sprite sprite-udobnoe-vremya"></i> Удобное время</h4>
+                            <div class="row pull-left">
+                              <div class="col-md-6">
+                              <p>с</p>
+                                <p class="input-group">
+                                
+                                  <span class="input-group-btn">
+                                    <button ng-disabled="!startEdit" type="button" class="btn btn-default" ng-click="open1()"><i class="sprite sprite-calendar"></i></button>
+                                  </span>
+                                  <input ng-disabled="!startEdit" type="text" class="form-control" uib-datepicker-popup ng-model="mainproduct.start" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                                </p>
+                              </div>
+
+                              <div class="col-md-6">
+                              <p>до</p>
+                                <p class="input-group">
+                                
+                                  <span class="input-group-btn">
+                                    <button ng-disabled="!startEdit" type="button" class="btn btn-default" ng-click="open2()"><i class="sprite sprite-calendar"></i></button>
+                                  </span>
+                                  <input type="text" ng-disabled="!startEdit" class="form-control" uib-datepicker-popup ng-model="mainproduct.end" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                                </p>
+                              </div>
+                            </div>
+                            <div class="form-group pull-right">
+                                <i class="sprite sprite-udobnoe-vremya"></i>
+                                <ul class="checkbox-grid">
+                                    <li>             
+                                        <label ><input type="checkbox" ng-disabled="!startEdit" ng-model="mainproduct.time[0]" />
+                                        Утренее время</label>
+                                    </li>
+                                    <li>             
+                                        <label ><input type="checkbox" ng-disabled="!startEdit" ng-model="mainproduct.time[1]" />
+                                        Дневное время</label>
+                                    </li>
+                                    <li>             
+                                        <label ><input type="checkbox" ng-disabled="!startEdit" ng-model="mainproduct.time[2]" />
+                                        Вечернее время</label>
+                                    </li>
+                                    <li>             
+                                        <label ><input type="checkbox" ng-disabled="!startEdit" ng-model="mainproduct.time[3]" />
+                                        Ночное время</label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
+        </div>
+        <div ng-if="startEdit" class="text-center bottom-button">
+            <button type="submit" ng-click="updateProduct(mainproduct)"
+                    class="btn btn-primary">
+                Обновить
+            </button>
         </div>
     </div>
 

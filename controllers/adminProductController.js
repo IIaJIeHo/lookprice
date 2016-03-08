@@ -44,14 +44,14 @@ angular.module("sportsStoreAdmin")
 
     $scope.logout = function(){
         $rootScope.userid = undefined;
-        document.cookie = "userid=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
+        document.cookie = "userlookid=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
         $rootScope.products = null;
         $scope.listProducts();
     }
     $scope.listProducts = function () {
         $scope.loading = true;
         if ($rootScope.userid == undefined){
-            $rootScope.userid = Functions.getCookie('userid');
+            $rootScope.userid = Functions.getCookie('userlookid');
         }
         if ($rootScope.userid == undefined){
             $location.path("/login");
@@ -69,6 +69,10 @@ angular.module("sportsStoreAdmin")
         else{
         Requests.query({userid: $rootScope.userid}).then(function(data){
             $scope.products = data;
+            angular.forEach($scope.products, function(value, key) {
+                value.start = new Date(value.start);
+                value.end = new Date(value.end);
+            });
             console.log($scope.products);
             if (data.length == 0){
                 $scope.setScreen(2);
@@ -127,6 +131,41 @@ angular.module("sportsStoreAdmin")
         }
 
     }
+
+
+    $scope.changeRequest = function () {
+        $scope.viewItem($scope.mainproduct, $scope.chosenRequest);
+    }
+    $scope.open1 = function() {
+        $scope.popup1.opened = true;
+    };
+
+    $scope.open2 = function() {
+        $scope.popup2.opened = true;
+    };
+
+  $scope.dateOptions = {
+    dateDisabled: disabled,
+    formatYear: 'yy',
+    maxDate: new Date(2020, 5, 22),
+    minDate: new Date(),
+    startingDay: 1
+  };
+
+   function disabled(data) {
+    var date = data.date,
+      mode = data.mode;
+    return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+  }
+
+    $scope.popup1 = {
+    opened: false
+  };
+
+  $scope.popup2 = {
+    opened: false
+  };
+
         $scope.formatDate = function(date) {
             if (date != undefined){
                  date = new Date(date);
