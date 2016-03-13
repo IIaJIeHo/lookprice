@@ -228,6 +228,46 @@
         return checking;
     }
 
+    $scope.hidesub = function (data) {
+        var ok = false;
+        angular.forEach(data,function (value,key) {
+            if (value){
+                ok = true;
+            }
+        });
+       return ok;
+    }
+
+        $scope.open1 = function() {
+        $scope.popup1.opened = true;
+    };
+
+    $scope.open2 = function() {
+        $scope.popup2.opened = true;
+    };
+
+  $scope.dateOptions = {
+    dateDisabled: disabled,
+    formatYear: 'yy',
+    maxDate: new Date(2020, 5, 22),
+    minDate: new Date(),
+    startingDay: 1
+  };
+
+   function disabled(data) {
+    var date = data.date,
+      mode = data.mode;
+    return mode === 'day' && (false);
+  }
+
+    $scope.popup1 = {
+    opened: false
+  };
+
+  $scope.popup2 = {
+    opened: false
+  };
+
     $scope.createProduct = function (product) {
         product.userid=$rootScope.userid;
         $scope.loading = true; 

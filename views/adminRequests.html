@@ -29,13 +29,13 @@
     <ng-spinner></ng-spinner>
 
     <div id="request{{$index+1}}"  ng-repeat="type in salon_types" ng-if="allitems == ($index + 1)" ng-init="rootIndex = $index">
-        <div class="panel panel-info">
+        <div class="panel panel-info panel-main">
           <div class="panel-heading">
-            <h2 class="panel-title"><i class="kuzov-work"></i>{{request_types[$index]}}</h2>
+            <h2 class="panel-title"><i class="sprite sprite-o{{$index+1}}"></i>{{request_types[$index]}}</h2>
           </div>
           <div class="panel-body">
                 <form name="workForm{{$index+1}}" novalidate>
-                      <div class="panel panel-info" ng-repeat="subtype in type" ng-init="parentIndex = $index" ng-class="{'nosubtype':!subtype.title}">
+                      <div class="panel panel-info panel-sub" ng-repeat="subtype in type" ng-init="parentIndex = $index" ng-class="{'nosubtype':!subtype.title}">
                             <div class="panel-heading" role="tab" id="mend{{$index+1}}" ng-if="subtype.title">
                                 <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" data-target="#colmend{{$index+1}}" aria-expanded="false" aria-controls="colmend{{$index+1}}">
                                 <h4 class="panel-title">
@@ -59,22 +59,38 @@
                                 </div>
                         </div>
                     </div>
-                        <div class="form-group comment-area"><label>ЧТО НУЖНО СДЕЛАТЬ:</label><textarea class="form-control" ng-model="mainproduct.details.comment" placeholder="Что нужно сделать?" rows="5"> </textarea></div>
+                        <div class="form-group comment-form">
+                            <p>Если вы не нашли интересующие вас услуги в списке выше, то вы можете описаь задачу своими словами. Для этого воспользуйтесь формой ниже. При необходимости вы можете прикрепить фотографии, которые помогут нашим партнерам сделать вам более точное предложение.</p>
+                        </div>
+                        <div class="form-group comment-area"><label><i class="sprite sprite-comment"></i>ЧТО НУЖНО СДЕЛАТЬ:</label><textarea class="form-control" ng-model="mainproduct.details.comment" placeholder="Что нужно сделать?" rows="5"> </textarea></div>
+                        <div class="form-group" ng-class="{'has-error': (workForm{{$index+1}}.phone.$invalid && validation2.phone)}" >
+                            <label>Телефон</label>
+                            <input ng-disabled="user.phone" name="phone" class="form-control" ng-minlength="11" ng-pattern="/^[0-9]{11}$/"
+                                   ng-model="user.phone" ng-blur="validation2.phone = true" required />
+                            <div ng-show="validation2.phone">
+                                <span class="help-block" ng-show="workForm{{$index+1}}.phone.$error.required || workForm{{$index+1}}.phone.$error.minlength">Введите телефон</span>
+                                <span class="help-block" ng-show="workForm{{$index+1}}.phone.$error.pattern && !workForm{{$index+1}}.phone.$error.required && !workForm{{$index+1}}.phone.$error.minlength">Телефон длинной 11 символов и состоит из цифр</span>
+                            </div>
+                        </div>
                         <div class="clearfix b-first-block">
                             <div class="form-group pull-left" ng-class="{'has-error': errorfile}">
-                                <label>Фото</label>
-                                <div class="row photo-cube">
+                                <div class="row photo-cube" ng-class="{'nomargin':mainproduct.details.image.length == 0}">
                                     <div class="col-md-3" ng-repeat="i in mainproduct.details.image">
                                         <a target="_blank" href="{{baseurl}}{{i}}"><img ng-dostyle="max-width:100%; border: 1px solid;" ng-src="{{baseurl}}{{i}}" /></a>
                                         <a class="pointer" ng-click="deleteImage(i);" ng-show="startEdit">удалить</a>
                                     </div>
                                 </div>
+                                <div class="sprite sprite-foto">
                                 <input name="name" type='file' model='mainproduct.details.image' error='errorfile' ng-model='hello_file' file-feed multiple />
+                                </div>
                                 <div ng-show="errorfile">
                                     <span class="help-block" ng-show="errorfile == 'Toomuch'">Не более 4 файлов</span>
                                     <span class="help-block" ng-show="errorfile == 'Toomuch1mb'">Каждый файл не более 1 мб</span>
                                     <span class="help-block" ng-show="errorfile == 'Type'">Загружать можно только картинки</span>
                                 </div>
+
+                              <p class="addi-info">Прикрепите фотографию или пример готового решения</p>
+                              
                             </div>
                             <div class="pull-right">  
                                 <i class="sprite sprite-master-na-dom" ></i>    
@@ -87,8 +103,23 @@
                             </div>
                         </div>
                         <div class="clearfix b-second-block">
-                            <h4><i class="sprite sprite-udobnoe-vremya"></i> Удобное время</h4>
                             <div class="row pull-left">
+                                <div class="col-md-12 pab20">
+                                    <div class="btn-group">
+                                        <label class="btn btn-default" ng-model="mainproduct.manny" uib-btn-checkbox>
+                                            <i class="sprite sprite-man h-sprite"></i><span>Мужской</span>
+                                        </label>
+                                        <label class="btn btn-default" ng-model="mainproduct.girly" uib-btn-checkbox>
+                                            <i class="sprite sprite-girl h-sprite-2"></i><span>Женский</span>
+                                        </label>
+                                        <label class="btn btn-default" ng-model="mainproduct.childly" uib-btn-checkbox>
+                                            <i class="sprite sprite-rebenok h-sprite-3"></i><span>Ребенок</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                <h4 class="header-time"><i class="sprite sprite-udobnoe-vremya"></i> Удобное время</h4>
+                                </div>
                               <div class="col-md-6">
                               <p>с</p>
                                 <p class="input-group">
@@ -110,8 +141,11 @@
                                   <input type="text" class="form-control" uib-datepicker-popup ng-model="mainproduct.end" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
                                 </p>
                               </div>
+                              <div class="col-md-12">
+                              <p class="addi-info"> Укажите диапазон удобных для получения услуги дней</p>
+                              </div>
                             </div>
-                            <div class="form-group pull-right">
+                            <div class="form-group pull-right clearfix">
                                 <i class="sprite sprite-udobnoe-vremya"></i>
                                 <ul class="checkbox-grid">
                                     <li>             

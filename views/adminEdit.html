@@ -45,6 +45,17 @@
                 <input name="name" class="form-control" value="{{user.email}}" ng-disabled="true" />
             </div>
             <div class="form-group">
+                <label>Пол</label><br>
+                <div class="btn-group">
+                    <label class="btn btn-default" ng-model="user.gender" uib-btn-radio="true">
+                        <i class="sprite sprite-man h-sprite"></i><span>Мужской</span>
+                    </label>
+                    <label class="btn btn-default" ng-model="user.gender" uib-btn-radio="false">
+                        <i class="sprite sprite-girl h-sprite-2"></i><span>Женский</span>
+                    </label>
+                </div>
+            </div>
+            <div class="form-group">
                 <label>Интуресующие города</label>
                     <multiselect class="input-xlarge" multiple="true"
                         ng-model="user.subjects"

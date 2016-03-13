@@ -130,8 +130,8 @@
     $scope.routes = [
     {path:"/main", name:"Мои заявки"},
     {path:"/leaverequest", name:"Оставить заявку"},
-    {path:"/edit", name:"Редактирование профиля"},
-    {path:"/edit", name:"Акции и Бонусы"}];
+    {path:"/edit", name:"Профиль"},
+    {path:"http://lookprice.ru/promotion", name:"Акции и Бонусы", ext: true}];
     $scope.subjects = Data.getSubjects();
     var w = angular.element($window);
     if ($(window).width() < 768){
@@ -166,8 +166,14 @@
     $scope.setScreen = function (index) {
     if ($(window).width() < 768){
         $scope.ToggleNav();
+    }   
+    if ($scope.routes[index].ext){
+        window.open($scope.routes[index].path,'_blank');
     }
+    else{
         $location.path($scope.routes[index].path);
+    }
+        
         Requests.query({userid: $rootScope.userid}).then(function(data){
             $scope.products = data;
             angular.forEach($scope.products, function(value, key) {

@@ -75,7 +75,7 @@ angular.module("sportsStoreAdmin")
             });
             console.log($scope.products);
             if (data.length == 0){
-                $scope.setScreen(2);
+                $scope.setScreen(1);
             }
             Autos.query({userid: $rootScope.userid}).then(function(auto_data){
                 $scope.autos = auto_data;
@@ -155,7 +155,7 @@ angular.module("sportsStoreAdmin")
    function disabled(data) {
     var date = data.date,
       mode = data.mode;
-    return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+    return mode === 'day' && (false);
   }
 
     $scope.popup1 = {
@@ -363,6 +363,16 @@ angular.module("sportsStoreAdmin")
         return $scope.showtable;
     }
 
+    $scope.hidesub = function (data) {
+        var ok = false;
+        angular.forEach(data,function (value,key) {
+            if (value){
+                ok = true;
+            }
+        });
+       return ok;
+    }
+
     $scope.viewItem = function (product) {
         $scope.allitems = !$scope.allitems;
         $scope.startEdit = false;
@@ -500,7 +510,7 @@ angular.module("sportsStoreAdmin")
    function disabled(data) {
     var date = data.date,
       mode = data.mode;
-    return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+    return mode === 'day' && (false);
   }
 
     $scope.popup1 = {

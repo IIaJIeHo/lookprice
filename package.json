@@ -32,6 +32,8 @@
     "gulp-watch": "^4.2.4",
     "node-notifier": "^4.2.1",
     "vinyl-source-stream": "^1.1.0",
-    "watchify": "^2.4.0"
+    "watchify": "^2.4.0",
+    "load-grunt-config": "^0.19.1",
+    "time-grunt": "^1.2.2"
   }
 }

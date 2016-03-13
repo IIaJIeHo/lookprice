@@ -391,4 +391,5 @@ angular.module("sportsStoreAdmin")
           },
         templateUrl: 'modules/login.tmpl.html'
       }
-  })
+  });
+

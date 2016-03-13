@@ -122,7 +122,8 @@
     $scope.routes = [
     {path:"/main", name:"Заявки"},
     {path:"/responds", name:"Мои ответы"},
-    {path:"/edit", name:"Редактирование профиля"}];
+    {path:"/edit", name:"Профиль"},
+    {path:"http://lookprice.ru/promotion", name:"Акции и Бонусы", ext: true}];
     $scope.shownav = true;
     if ($(window).width() < 768){
         $scope.shownav = false;
@@ -143,7 +144,12 @@
         if ($(window).width() < 768){
             $scope.ToggleNav();
         }
-        $location.path($scope.routes[index].path);
+        if ($scope.routes[index].ext){
+            window.open($scope.routes[index].path,'_blank');
+        }
+        else{
+            $location.path($scope.routes[index].path);
+        }
         Autoservices.getById($rootScope.userid).then(function(autoservice){
             $scope.autoservice = autoservice;
             $scope.autoservice.id = $scope.autoservice._id.$oid;
