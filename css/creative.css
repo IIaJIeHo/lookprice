@@ -2248,7 +2248,7 @@ margin-top: 9px;
 
 .b-bonus{
   background: white;
-  padding: 10px 0;
+  padding: 10px 0 0;
 }
 
 .b-bonus p{
@@ -2408,4 +2408,8 @@ footer a:hover{
 
 .nomargin{
   margin: 0 !important;
+}
+
+.pa0.container-fluid{
+  padding: 0;
 }

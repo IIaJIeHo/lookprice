@@ -297,20 +297,14 @@
                     <span class="sprite sprite-comment"></span>
                     Прочесть
                 </div>
-                <div class="col-md-2" ng-click="toogleAutoservice[$index] = !toogleAutoservice[$index];">
-                    {{item.cost | currency}}
+                <div class="col-md-3" ng-click="toogleAutoservice[$index] = !toogleAutoservice[$index];">
+                    <span ng-if="item.autoserviceid == autoservice.id">{{item.cost | currency}}</span><span class="respond-status" ng-if="item.autoserviceid != autoservice.id"><span style="color: #BD0101; border: 1px solid;">Скрыто</span></span>
                 </div>
-                <div class="col-md-2 date" ng-click="toogleAutoservice[$index] = !toogleAutoservice[$index];">
+                <div class="col-md-3 date" ng-click="toogleAutoservice[$index] = !toogleAutoservice[$index];">
                     {{formatDate(item.date)}}
                 </div>
-                <div class="col-md-2 toogle-action">
-                    <button ng-class="{'btn-success': (!item.approved),'btn-danger': (item.approved)}" ng-click="approveItem(item,item.autoservice)" class="btn">
-                                <span ng-if="!item.approved">Принять</span>
-                                <span ng-if="item.approved">Отклонить</span>
-                    </button>
-                </div>
                 <div class="col-lg-12" ng-if="toogleAutoservice[$index]">
-                    {{item.description}}
+                    <span ng-if="item.autoserviceid == autoservice.id">{{item.description | currency}}</span><span class="respond-status" ng-if="item.autoserviceid != autoservice.id"><span style="color: #BD0101; border: 1px solid;">Скрыто</span></span>
                 </div>
             </div> 
         </div>

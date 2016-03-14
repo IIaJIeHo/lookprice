@@ -77,7 +77,7 @@
                                 <div class="row photo-cube" ng-class="{'nomargin':mainproduct.details.image.length == 0}">
                                     <div class="col-md-3" ng-repeat="i in mainproduct.details.image">
                                         <a target="_blank" href="{{baseurl}}{{i}}"><img ng-dostyle="max-width:100%; border: 1px solid;" ng-src="{{baseurl}}{{i}}" /></a>
-                                        <a class="pointer" ng-click="deleteImage(i);" ng-show="startEdit">удалить</a>
+                                        <a class="pointer" ng-click="deleteImage(i);">удалить</a>
                                     </div>
                                 </div>
                                 <div class="sprite sprite-foto">
