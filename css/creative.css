@@ -72,6 +72,9 @@ label.la-16{
 .panel-default>.panel-heading{
   background: #DCE3EB;
 }
+.panel{
+  margin-bottom: 0;
+}
 .panel-default  .panel-title{
   color: #333;
 }
@@ -156,6 +159,18 @@ button.close{
 }
 .container{
   min-width: 0px;
+}
+
+.btn.btn-default{
+  background:#fff;
+}
+.btn-default:hover,
+.btn-default:focus,
+.btn-default:active,
+.btn-default.active,
+.open .dropdown-toggle.btn-default {
+  background-color: #ddd;
+  border-color: #ddd;
 }
 .btn-primary {
   color: #ffffff;
@@ -359,13 +374,13 @@ button.close{
   background-position: -898px -487px;
 }
 
-.sprite-m2 {
+.sprite-m3 {
   width: 36px;
   height: 36px;
   background-position: -934px -523px;
 }
 
-.sprite-m3 {
+.sprite-m2 {
   width: 36px;
   height: 36px;
   background-position: -970px -559px;
@@ -431,13 +446,13 @@ button.close{
   background-position: -1256px -867px;
 }
 
-.sprite-o2 {
+.sprite-o3 {
   width: 25px;
   height: 25px;
   background-position: -1281px -892px;
 }
 
-.sprite-o3 {
+.sprite-o2 {
   width: 25px;
   height: 25px;
   background-position: -1306px -917px;
@@ -533,13 +548,13 @@ button.close{
   background-position: -1699px -1257px;
 }
 
-.sprite-u2 {
+.sprite-u3 {
   width: 117px;
   height: 118px;
   background-position: -1817px -1375px;
 }
 
-.sprite-u3 {
+.sprite-u2 {
   width: 118px;
   height: 118px;
   background-position: -1934px -1493px;
@@ -716,7 +731,9 @@ button.close{
 .strelka2 {
   float:right; margin-top:5px;
 }
-
+#accordion .container-fluid{
+  padding: 0;
+}
     .relative-wrap{
       position: relative;
     }
@@ -743,7 +760,7 @@ button.close{
       vertical-align:middle;
     }
     #productTable td{
-      max-width: 200px !important;
+      max-width: 180px !important;
       vertical-align: middle;
     }
     .autoservice__view, .autoservice__name, .autoservice__metro{
@@ -1344,6 +1361,10 @@ button.close{
     }
     .nav .btn-link{
       margin-left:2px;
+      cursor: pointer;
+    }
+    .btn-link{
+      cursor: pointer;
     }
 
     .nav-tabs>li>a.itab-blue, .nav-tabs>li.active>a.itab-blue{
@@ -1379,6 +1400,9 @@ button.close{
     .row-hover > div:not(:nth-child(4)){
       border-right:1px solid #eee;
     }
+    .row-hover > div:not(:last-child){
+      height: 68px;
+    }
     .row-hover > div:last-child{
       /*border-top:2px solid #3c9a5f;*/
       border-right: none !important;
@@ -1389,6 +1413,9 @@ button.close{
     }
     .row-hover > div{
       padding:15px 5px;
+    }
+    .uib-left{
+      min-width: 39px;
     }
 input[switch] {
   display: none;
@@ -1672,7 +1699,6 @@ ul.checkbox-grid{
 .active-buttons button{
     width:2.1em;
     height: 2.1em;
-    margin-right:3px;
 }
 .fa__text{
   padding-right:5px;
@@ -1923,7 +1949,7 @@ ul.checkbox-grid{
 }
 .mobile-request{
   background: #fff;
-  margin: 20px;
+  margin: 0 20px 20px;
   padding: 10px;
   display: none;
 }
@@ -2057,6 +2083,9 @@ margin-top: 9px;
     .container-fluid{
       padding: 0;
     }
+    .col-sm-3.button-menu{
+      padding: 0;
+    }
     .user-class .col-sm-9{
       padding: 0;
     }
@@ -2152,8 +2181,12 @@ margin-top: 9px;
   margin-right: 8px;
 }
 
-
-
+.panel + .main-part{
+  margin-top:10px;
+}
+.row.row-hover{
+  margin:0;
+}
 
 .button-menu button.btn{
   width:100%;
@@ -2161,7 +2194,7 @@ margin-top: 9px;
   position: relative;
   background: #9aa6b6;
   color: white;
-  margin: 2px 0;
+  margin: 0 0 4px;
   border: none;
   box-shadow: none;
 }
@@ -2369,7 +2402,9 @@ margin-top: 9px;
   margin-bottom: -6px;
   margin-right: 5px;
 }
-
+.full-width{
+  margin:20px 0 40px;
+}
 .full-width img{
   width:100%;
 }
@@ -2412,4 +2447,8 @@ footer a:hover{
 
 .pa0.container-fluid{
   padding: 0;
+}
+
+.form-control[readonly]{
+  background: white;
 }

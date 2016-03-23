@@ -73,7 +73,6 @@ angular.module("sportsStoreAdmin")
                 value.start = new Date(value.start);
                 value.end = new Date(value.end);
             });
-            console.log($scope.products);
             if (data.length == 0){
                 $scope.setScreen(1);
             }
@@ -447,7 +446,7 @@ angular.module("sportsStoreAdmin")
                     email: partner.email,
                     username: partner.name,
                     subject: 'Вашу заявку № ' + item.name + ' подтвердили',
-                    html: $scope.user.name + " подтвердил заявку № " + item.name + ", телефон: " + $scope.user.phone +", стоимость ремонта " + item.cost + "руб. ", 
+                    html: $scope.user.name + " подтвердил заявку № " + item.name + ", телефон: " + $scope.user.phone +", стоимость услуг " + item.cost + "руб. ", 
                 });        
             }
 

@@ -13,11 +13,11 @@
         <strong>Ого! </strong>
         Вы изменили свой пароль
     </div>
-<div ng-controller="productCtrl">
+<div ng-controller="productCtrl" >
 <div id="loader-wrapper" ng-if="loading">
     <div id="loader"></div>
 </div>
-<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" ng-init="listProducts()">
   <div class="panel panel-info">
     <div class="panel-heading" role="tab" id="headingOne">
         <a role="button" data-toggle="collapse" data-parent="#accordion"  data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -41,6 +41,14 @@
                         change="selected()" ></multiselect>
             </div>
             <div><span ng-repeat="subject in subjects.data | filter:filterbySubject">{{subject.label}} ; </span></div>
+            <div class="form-group">
+                <label>Укажите интересующие услуги</label>
+                    <multiselect class="input-xlarge" multiple="true"
+                        ng-model="autoservice.services"
+                        options="service.label for service in services"
+                        change="selected()" ></multiselect>
+            </div>
+            <div><span ng-repeat="service in services | filter:filterbyService">{{service.label}} ; </span></div>
             <div class="form-group">
                 <label>Адрес</label>
                 <input name="surname" class="form-control" ng-model="autoservice.address"/>

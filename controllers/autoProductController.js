@@ -28,6 +28,32 @@
     $scope.showtable = false;
     $scope.baseurl = $location.absUrl().substring(0,$location.absUrl().indexOf('/a'));
     $scope.requests = ['Ногтевой сервис','Парикмахерские услуги','Косметология','Визаж','Массаж','Татуаж'];
+    $scope.services = [
+    {
+        id: "1",
+        label: "Ногтевой сервис"
+    },
+    {
+        id: "2",
+        label: "Парикмахерские услуги"
+    },
+    {
+        id: "3",
+        label: "Косметология"
+    },
+    {
+        id: "4",
+        label: "Визаж"
+    },
+    {
+        id: "5",
+        label: "Массаж"
+    },
+    {
+        id: "6",
+        label: "Татуаж"
+    }
+    ];
     $scope.texts = Data.getWorkTypes();
     $scope.metrostations = Data.getMetro();
     $scope.regions = Data.getRegions();
@@ -81,7 +107,6 @@
             else{
             console.log($rootScope.userid);
             Autoservices.getById($rootScope.userid).then(function(autoservice){
-                console.log("dfdf1");
                 $scope.autoservice = autoservice;
                 if (autoservice.subjects != undefined){
                     $scope.subjects = Data.getSubjects();
@@ -96,12 +121,10 @@
                             return x;         
                         }
                     });
-                    console.log("dfdf");
                     $rootScope.subjects = $scope.subjects;           
                 }
                 $scope.autoservice.id = $scope.autoservice._id.$oid;
                 $rootScope.autoservice = $scope.autoservice;
-                console.log("dfdf");
                     Requests.query().then(function(data){
                         var temp_time = $scope.autoservice.date - 30*1000*60*60*24;
                         data = data.filter(function(product){
@@ -111,6 +134,13 @@
                             data = data.filter(function(product){
                                 return ((!product.subjects||!product.subjects[0]) || (product.subjects.some(function (subject) {
                                    return $scope.autoservice.subjects.indexOf(subject) >= 0
+                                })));
+                            });
+                        }
+                        if ($scope.autoservice.services&&$scope.autoservice.services[0]){
+                            data = data.filter(function(product){
+                                return ((!$scope.autoservice.services||!$scope.autoservice.services[0]) || ($scope.autoservice.services.some(function (service) {
+                                   return product.type == $scope.requests[service - 1];
                                 })));
                             });
                         }
@@ -192,6 +222,16 @@
 
         if ($scope.autoservice&&$scope.autoservice.subjects){
             return ($scope.autoservice.subjects.indexOf(subject.id) !== -1);
+        }
+        else{
+            return false;
+        }
+    }
+
+    $scope.filterbyService = function (service) {
+
+        if ($scope.autoservice&&$scope.autoservice.services){
+            return ($scope.autoservice.services.indexOf(service.id) !== -1);
         }
         else{
             return false;
@@ -386,7 +426,7 @@
                 email: userofrequest.email,
                 username: userofrequest.username,
                 subject: 'На вашу заявку № '+respond.name+' откликнулись',
-                html: $scope.autoservice.username + " сервис ответил на заявку № " + respond.name + ", стоимость ремонта " + respond.cost + "руб. Комментарий: " + respond.description,
+                html: $scope.autoservice.username + " салон ответил на заявку № " + respond.name + ", стоимость услгу " + respond.cost + "руб. Комментарий: " + respond.description,
             });
             $scope.loading = false; 
         });
@@ -483,6 +523,31 @@
         return checking;
     }
 
+    $scope.imageinit = function () {
+        if (!$scope.mainrespond.images){
+            $scope.mainrespond.images = [];
+        }
+    }
+
+    $scope.deleteImage = function(store,image){
+        store.splice(store.indexOf(image),1);
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'delete.php', true);
+        xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        var params = "filename="+image.slice(1);
+        console.log(params);
+        var json = JSON.stringify({'filename' : image});
+        xhr.send(params);
+        xhr.onload = function () {
+            console.log(xhr.status);
+            if (xhr.status === 200) {
+                console.log(xhr.responseText);
+            } else {
+                console.log(xhr.responseText);
+            }
+        };
+    }
+
     $scope.viewItem = function (product) {
         $scope.allitems = !$scope.allitems;
         $scope.answered = false;
@@ -526,5 +591,5 @@
         $scope.editedProduct = null;
     }
 
-    $scope.listProducts();
+    //$scope.listProducts();
 });

@@ -19,13 +19,13 @@
             </div>
         </div>
     </div>
-    <table id="productTable" style="width:100%;" class="table table-lookprice table-bordered table-hover mobile-request-hide" ng-show="allitems" ng-init="check_complete = false;">
+    <table id="productTable" style="width:100%;" class="table table-lookprice table-bordered table-hover mobile-request-hide" ng-show="allitems" ng-init="check_complete = false; listProducts();">
         <tr class="sort-names">
-            <th><a href="" ng-click="order('type')">Заявка<i class="fa" ng-show="predicate === 'type'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'type'" ></i></a></th>
-            <th><a href="" ng-click="order('details.comment')">Комментарий<i class="fa" ng-show="predicate === 'details.comment'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'details.comment'" ></i></a></th>
-            <th><a href="" ng-click="order('responds.length')">Кол-во откликов <i class="fa" ng-show="predicate === 'responds.length'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'responds.length'" ></i></a></th>
-            <th><a href="" ng-click="order('date')">Дата <i class="fa" ng-show="predicate === 'date'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'date'" ></i></a></th>
-            <th><a href="" ng-click="order('completed')">Статус <i class="fa" ng-show="predicate === 'completed'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'date'" ></i></a></th>
+            <th nowrap><a href="" ng-click="order('type')">Заявка<i class="fa" ng-show="predicate === 'type'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'type'" ></i></a></th>
+            <th nowrap><a href="" ng-click="order('details.comment')">Комментарий<i class="fa" ng-show="predicate === 'details.comment'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'details.comment'" ></i></a></th>
+            <th nowrap><a href="" ng-click="order('responds.length')">Кол-во откликов <i class="fa" ng-show="predicate === 'responds.length'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'responds.length'" ></i></a></th>
+            <th nowrap><a href="" ng-click="order('date')">Дата <i class="fa" ng-show="predicate === 'date'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'date'" ></i></a></th>
+            <th nowrap><a href="" ng-click="order('completed')">Статус <i class="fa" ng-show="predicate === 'completed'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'date'" ></i></a></th>
         </tr>
         <tr ng-repeat="item in products | filter:query |orderBy:predicate:reverse" ng-click="viewItem(item)">
             <td><span class="sprite pull-left" ng-class="{'sprite-m1': item.type == 'Ногтевой сервис', 'sprite-m2': item.type == 'Парикмахерские услуги', 'sprite-m3': item.type == 'Косметология','sprite-m4': item.type == 'Визаж','sprite-m5': item.type == 'Массаж' ,'sprite-m6': item.type == 'Татуаж'}"></span><div class="table-name">{{item.name}}</div><div class="table-type">{{item.type}}</div></td>
@@ -80,7 +80,7 @@
     </div>
 
 
-    <table id="singleTable" class="table table-striped table-bordered table-hover" ng-if="!allitems">
+    <table id="singleTable" class="table table-striped table-hover" ng-if="!allitems">
         <button ng-click="viewItem(null)" class="btn btn-xs btn-primary btn-icons btn-fixed" ng-if="!allitems">
             <i class="fa fa-arrow-left"></i>
         </button>
@@ -152,13 +152,13 @@
                             <div class="row pull-left">
                                 <div class="col-md-12 pab20">
                                     <div class="btn-group">
-                                        <label class="btn btn-default" ng-disabled="!startEdit" ng-model="mainproduct.manny" uib-btn-checkbox>
+                                        <label class="btn btn-default" ng-disabled="!startEdit" ng-hide="!mainproduct.manny" ng-model="mainproduct.manny" uib-btn-checkbox>
                                             <i class="sprite sprite-man h-sprite"></i><span>Мужской</span>
                                         </label>
-                                        <label class="btn btn-default" ng-disabled="!startEdit" ng-model="mainproduct.girly" uib-btn-checkbox>
+                                        <label class="btn btn-default" ng-disabled="!startEdit" ng-hide="!mainproduct.girly" ng-model="mainproduct.girly" uib-btn-checkbox>
                                             <i class="sprite sprite-girl h-sprite-2"></i><span>Женский</span>
                                         </label>
-                                        <label class="btn btn-default" ng-disabled="!startEdit" ng-model="mainproduct.childly" uib-btn-checkbox>
+                                        <label class="btn btn-default" ng-disabled="!startEdit" ng-hide="!mainproduct.childly" ng-model="mainproduct.childly" uib-btn-checkbox>
                                             <i class="sprite sprite-rebenok h-sprite-3"></i><span>Ребенок</span>
                                         </label>
                                     </div>
@@ -249,6 +249,22 @@
                 <label>Комментарий</label>
                 <textarea class="form-control" ng-model="editedRespond.description" placeholder="Подробно расскажите про детали предложения" rows="5" ng-disabled="mainproduct.completed"> </textarea>
             </div>
+            <div class="form-group" ng-class="{'has-error': errorfile}" ng-init="editedRespond.images = [];">
+                <div class="row photo-cube">
+                    <div class="col-md-3" ng-repeat="i in editedRespond.images">
+                        <a target="_blank" href="{{baseurl}}{{i}}"><img ng-dostyle="max-width:100%; border: 1px solid;" ng-src="{{baseurl}}{{i}}" /></a>
+                        <a class="pointer" ng-click="deleteImage(editedRespond.images,i);">удалить</a>
+                    </div>
+                </div>
+                <div class="sprite sprite-foto">
+                    <input name="name" type='file' model='editedRespond.images' error='errorfile' ng-model='hello_file' file-feed multiple />
+                </div>
+                <div ng-show="errorfile">
+                    <span class="help-block" ng-show="errorfile == 'Toomuch'">Не более 4 файлов</span>
+                    <span class="help-block" ng-show="errorfile == 'Toomuch1mb'">Каждый файл не более 1 мб</span>
+                    <span class="help-block" ng-show="errorfile == 'Type'">Загружать можно только картинки</span>
+                </div>
+            </div>
             <div class="text-center">
                 <button type="submit" ng-click="createRespond(editedRespond);answered = true;"
                         ng-disabled="!editedRespond.cost || priceform.cost.$error.pattern || mainproduct.completed"
@@ -303,8 +319,13 @@
                 <div class="col-md-3 date" ng-click="toogleAutoservice[$index] = !toogleAutoservice[$index];">
                     {{formatDate(item.date)}}
                 </div>
-                <div class="col-lg-12" ng-if="toogleAutoservice[$index]">
-                    <span ng-if="item.autoserviceid == autoservice.id">{{item.description | currency}}</span><span class="respond-status" ng-if="item.autoserviceid != autoservice.id"><span style="color: #BD0101; border: 1px solid;">Скрыто</span></span>
+                <div class="col-lg-12" ng-show="toogleAutoservice[$index]">
+                    <span ng-if="item.autoserviceid == autoservice.id">{{item.description}}</span><span class="respond-status" ng-if="item.autoserviceid != autoservice.id"><span style="color: #BD0101; border: 1px solid;">Скрыто</span></span>
+                    <div class="row">
+                        <div class="col-sm-3" ng-if="item.autoserviceid == autoservice.id" ng-repeat="i in item.images">
+                            <a target="_blank" href="{{baseurl}}{{i}}"><img ng-dostyle="max-width:200px; border: 1px solid;" ng-src="{{baseurl}}{{i}}" /></a>
+                        </div>
+                    </div>
                 </div>
             </div> 
         </div>

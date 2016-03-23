@@ -60,7 +60,7 @@
                         </div>
                     </div>
                         <div class="form-group comment-form">
-                            <p>Если вы не нашли интересующие вас услуги в списке выше, то вы можете описаь задачу своими словами. Для этого воспользуйтесь формой ниже. При необходимости вы можете прикрепить фотографии, которые помогут нашим партнерам сделать вам более точное предложение.</p>
+                            <p>Если вы не нашли интересующие вас услуги в списке выше, то вы можете описать задачу своими словами. Для этого воспользуйтесь формой ниже. При необходимости вы можете прикрепить фотографии, которые помогут нашим партнерам сделать вам более точное предложение.</p>
                         </div>
                         <div class="form-group comment-area"><label><i class="sprite sprite-comment"></i>ЧТО НУЖНО СДЕЛАТЬ:</label><textarea class="form-control" ng-model="mainproduct.details.comment" placeholder="Что нужно сделать?" rows="5"> </textarea></div>
                         <div class="form-group" ng-class="{'has-error': (workForm{{$index+1}}.phone.$invalid && validation2.phone)}" >
@@ -127,7 +127,7 @@
                                   <span class="input-group-btn">
                                     <button type="button" class="btn btn-default" ng-click="open1()"><i class="sprite sprite-calendar"></i></button>
                                   </span>
-                                  <input type="text" class="form-control" uib-datepicker-popup ng-model="mainproduct.start" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                                  <input type="text" class="form-control" ng-focus="open1()" uib-datepicker-popup ng-model="mainproduct.start" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" readonly  />
                                 </p>
                               </div>
 
@@ -138,11 +138,11 @@
                                   <span class="input-group-btn">
                                     <button type="button" class="btn btn-default" ng-click="open2()"><i class="sprite sprite-calendar"></i></button>
                                   </span>
-                                  <input type="text" class="form-control" uib-datepicker-popup ng-model="mainproduct.end" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                                  <input type="text" class="form-control" ng-focus="open2()" uib-datepicker-popup ng-model="mainproduct.end" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" readonly />
                                 </p>
                               </div>
                               <div class="col-md-12">
-                              <p class="addi-info"> Укажите диапазон удобных для получения услуги дней</p>
+                              <p class="addi-info">Укажите диапазон дней, удобных для получения услуги</p>
                               </div>
                             </div>
                             <div class="form-group pull-right clearfix">

@@ -1,5 +1,5 @@
-﻿<div ng-controller="productCtrl" class="partial-view" ng-init="formdetails = 'question'; $parent.formdetail = 'bamper';">
-    <div id="loader-wrapper" ng-if="loading">
+﻿<div ng-controller="productCtrl" class="partial-view">
+    <div id="loader-wrapper" ng-if="loading" ng-init="listProducts()">
         <div id="loader"></div>
     </div>
     <div class="alert alert-success" id="a-respond-edit" style="position:fixed;bottom:0;right:0;display:none;">
@@ -12,7 +12,7 @@
         <strong>Ого! </strong>
         Вы удалили {{updatedRespond.name}}
     </div>
-<div id="addTable"  ng-if="respondview == 3">
+<div id="addTable"  ng-if="respondview == 3" >
     <button ng-click="viewRespond(mainrespond, 1)" class="btn btn-xs btn-primary btn-icons btn-fixed"><i class="fa fa-arrow-left"></i></button>
         <div class="panel panel-info">
             <div class="panel-heading">
@@ -30,6 +30,23 @@
                 <div class="form-group">
                     <label>Комментарий</label>
                     <textarea class="form-control" ng-model="mainrespond.description" placeholder="Подробно расскажите про детали предложения" rows="5"> </textarea>
+                </div>
+                <div class="form-group" ng-class="{'has-error': errorfile}" ng-init="imageinit()">
+                    <div class="row photo-cube" ng-class="{'nomargin':mainrespond.images.length == 0}">
+                        <div class="col-md-3" ng-repeat="i in mainrespond.images">
+                            <a target="_blank" href="{{baseurl}}{{i}}"><img ng-dostyle="max-width:100%; border: 1px solid;" ng-src="{{baseurl}}{{i}}" /></a>
+                            <a class="pointer" ng-click="deleteImage(mainrespond.images,i);">удалить</a>
+                        </div>
+                    </div>
+                    <div class="sprite sprite-foto" >
+                    <input name="name" type='file' model='mainrespond.images' error='errorfile' ng-model='hello_file' file-feed multiple />
+                    </div>
+                    <div ng-show="errorfile">
+                        <span class="help-block" ng-show="errorfile == 'Toomuch'">Не более 4 файлов</span>
+                        <span class="help-block" ng-show="errorfile == 'Toomuch1mb'">Каждый файл не более 1 мб</span>
+                        <span class="help-block" ng-show="errorfile == 'Type'">Загружать можно только картинки</span>
+                    </div>
+                  
                 </div>
                     <div class="text-center bottom-button">
                         <button type="submit"  ng-click="updateRespond(mainrespond)"
@@ -56,16 +73,14 @@
     <table id="productTable" class="table table-lookprice table-bordered table-hover mobile-request-hide" ng-show="respondview == 1"> 
     <!-- просмотр всех ответов -->
         <tr class="sort-names">
-            <th><a href="" ng-click="order('type')">Заявка<i class="fa" ng-show="predicate === 'type'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'type'" ></i></a></th>
-            <th><a href="" ng-click="order('description')">Комментарий <i class="fa" ng-show="predicate === 'description'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'description'" ></i> </a></th>
-            <th><a href="" ng-click="order('cost')">Стоимость <i class="fa" ng-show="predicate === 'cost'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'cost'" ></i></a></th>
-            <th><a href="" ng-click="order('date')">Дата заявки<i class="fa" ng-show="predicate === 'date'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'date'" ></i></a></th>
-            <th><a href="" ng-click="order('approved')">Статус заявки<i class="fa" ng-show="predicate === 'approved'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'approved'" ></i></a></th>
-            <th><a href="">Управление</a></th>
+            <th nowrap><a href="" ng-click="order('type')">Заявка<i class="fa" ng-show="predicate === 'type'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'type'" ></i></a></th>
+            <th nowrap><a href="" ng-click="order('cost')">Стоимость<i class="fa" ng-show="predicate === 'cost'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'cost'" ></i></a></th>
+            <th nowrap><a href="" ng-click="order('date')">Дата заявки<i class="fa" ng-show="predicate === 'date'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'date'" ></i></a></th>
+            <th nowrap><a href="" ng-click="order('approved')">Статус заявки<i class="fa" ng-show="predicate === 'approved'" ng-class="{'fa-sort-asc':!reverse, 'fa-sort-desc':reverse}"></i><i class="fa fa-sort" ng-show="predicate != 'approved'" ></i></a></th>
+            <th nowrap><a href="">Управление</a></th>
         </tr>
         <tr ng-repeat="item in myresponds | filter:query |orderBy:predicate:reverse" >
             <td ng-click="viewRespond(item,2)"><span class="sprite pull-left" ng-class="{'sprite-m1': item.type == 'Ногтевой сервис', 'sprite-m2': item.type == 'Парикмахерские услуги', 'sprite-m3': item.type == 'Косметология','sprite-m4': item.type == 'Визаж','sprite-m5': item.type == 'Массаж' ,'sprite-m6': item.type == 'Татуаж'}"></span><div class="table-name">{{item.name}}</div><div class="table-type">{{item.type}}</div></td>
-            <td ng-click="viewRespond(item,2)">{{item.description}}</td>
             <td ng-click="viewRespond(item,2)">{{item.cost | currency}}</td>
             <td ng-click="viewRespond(item,2)">{{formatDate(item.date)}}</td>
             <td class="respond-status">
@@ -158,6 +173,13 @@
                 			</td>
                         </tr>
                         </table>
+                         <div class="form-group" ng-class="{'has-error': errorfile}">
+                            <div class="row photo-cube" ng-class="{'nomargin':mainrespond.images.length == 0}">
+                                <div class="col-md-3" ng-repeat="i in mainrespond.images">
+                                    <a target="_blank" href="{{baseurl}}{{i}}"><img ng-dostyle="max-width:100%; border: 1px solid;" ng-src="{{baseurl}}{{i}}" /></a>
+                                </div>
+                            </div>
+                        </div>
                         <div class="mobile-request ma0" >
                             <div class="clearfix text-center">
                                 <div class="pull-left">Имя: {{mainrespond.username}}</div>
@@ -254,13 +276,13 @@
                             <div class="row pull-left">
                                 <div class="col-md-12 pab20">
                                     <div class="btn-group">
-                                        <label class="btn btn-default" ng-disabled="!startEdit" ng-model="mainproduct.manny" uib-btn-checkbox>
+                                        <label class="btn btn-default" ng-disabled="!startEdit" ng-hide="!mainproduct.manny" ng-model="mainproduct.manny" uib-btn-checkbox>
                                             <i class="sprite sprite-man h-sprite"></i><span>Мужской</span>
                                         </label>
-                                        <label class="btn btn-default" ng-disabled="!startEdit" ng-model="mainproduct.girly" uib-btn-checkbox>
+                                        <label class="btn btn-default" ng-disabled="!startEdit" ng-hide="!mainproduct.girly" ng-model="mainproduct.girly" uib-btn-checkbox>
                                             <i class="sprite sprite-girl h-sprite-2"></i><span>Женский</span>
                                         </label>
-                                        <label class="btn btn-default" ng-disabled="!startEdit" ng-model="mainproduct.childly" uib-btn-checkbox>
+                                        <label class="btn btn-default" ng-disabled="!startEdit" ng-hide="!mainproduct.childly" ng-model="mainproduct.childly" uib-btn-checkbox>
                                             <i class="sprite sprite-rebenok h-sprite-3"></i><span>Ребенок</span>
                                         </label>
                                     </div>

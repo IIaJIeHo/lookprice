@@ -1,5 +1,6 @@
-﻿<div class="text-center top-back-site"><a href="http://lookprice.ru/" target="_blank"><span class="sprite sprite-na-sait"></span>Вернуться на сайт</a></div>
-<nav class="navbar" ng-controller="mainCtrl">
+﻿<div ng-controller="mainCtrl">
+<div class="text-center top-back-site"><a href="http://lookprice.ru/" target="_blank"><span class="sprite sprite-na-sait"></span>Вернуться на сайт</a></div>
+<nav class="navbar">
       <div class="container" ng-controller="productCtrl">
         <div class="row text-center top-logo-head">
           <div class="pull-left" ><span class="position-relative"><span ng-show="user.gender" class="sprite sprite-user-man"></span><span ng-show="!user.gender" class="sprite sprite-user-girl"></span>Привет, {{user.name}}!</span></div>
@@ -9,7 +10,7 @@
       </div>
     </nav>
 <div class="top-wrapper">
-  <div class="container" ng-controller="mainCtrl">
+  <div class="container">
     <div class="toggle-menu" ng-click="ToggleNav()">Меню</div>
     <div class="main-panel user-class">
           <div class="col-sm-3">
@@ -18,12 +19,12 @@
             </div>
             <div class="text-center b-bonus">
               <img src="images/krug.png"/>
-              <p>Вы получаете предложения только от наших партнеров, предложение будет включать в себя стоимость и примерный срок проведения ремонтных работ автомобиля или подробную информацию по проведению ТО</p>
-              <p>Вы получаете предложения только от наших партнеров, предложение будет включать в себя стоимость и примерный срок проведения ремонтных работ автомобиля или подробную информацию по проведению ТО</p>
-              <img src="images/banner_left.jpg" />
+              <p>Добро пожаловать в Look Price! Это сервис поиска самых выгодных предложений в сфере красоты и здоровья.</p>
+              <p>Обратите внимание, что ваш номер телефона и имя увидят только те заведения, предложение которых вы приняли нажав на кнопку "Принять". Look Price позволяет экономить ваше время и ваши деньги!</p>
+              <a href="http://www.love-sl.ru/" target="_blank"><img src="images/banner_left.jpg" /></a>
             </div>
           </div>
-    	   <div class="col-sm-9">
+    	   <div class="col-sm-9" ng-controller="productCtrl" >
             <div ng-include="'views/adminProducts.html'" ng-show="mainView"/></div>
             <div ng-include="'views/adminAutos.html'" ng-show="autoView"/></div>
             <div ng-include="'views/adminRequests.html'" ng-show="requestView"/></div>
@@ -31,13 +32,13 @@
     	   </div>
       </div>
       <div class="full-width col-sm-12">
-        <img src="images/banner_niz.jpg" />
+        <a href="http://lady-f.ru/" target="_blank"><img src="images/banner_niz.jpg" /></a>
       </div>
       <footer class="text-center">
         <div class="col-sm-3 hidden-xs">
-          <a href="">Правила пользования сайтом</a>
-          <a href="">Техническая поддержка</a>
-          <a href="">Обратная связь</a>
+          <a target="_blank" href="/pravila.html">Правила пользования сайтом</a>
+          <a target="_blank" href="/answerme.html">Техническая поддержка</a>
+          <a target="_blank" href="/contacts.html">Обратная связь</a>
         </div>
         <div class="col-sm-6 text-center">
           <img src="images/logo1.png" />
@@ -48,7 +49,7 @@
   </div>
 </div>
 
-
     <div id="loader-wrapper" style="display:none;">
         <div id="loader"></div>
     </div>
+</div>
