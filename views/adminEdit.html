@@ -35,6 +35,7 @@
                 <label>Телефон</label>
                 <input name="phone" class="form-control" ng-minlength="11" ng-pattern="/^[0-9]{11}$/"
                        ng-model="user.phone" ng-blur="validation.phone = true" required />
+                <span class="help-block">Ваш номер телефона видят только те заведения и частные мастера, предложение которых вы приняли.</span>
                 <div ng-show="validation.phone">
                     <span class="help-block" ng-show="authForm.phone.$error.required || authForm.phone.$error.minlength">Введите телефон</span>
                     <span class="help-block" ng-show="authForm.phone.$error.pattern && !authForm.phone.$error.required && !authForm.phone.$error.minlength">Телефон длинной 11 символов и состоит из цифр</span>
@@ -67,7 +68,6 @@
 
             <div class="text-center">
                 <button type="submit" ng-click="editUser(user,false)"
-                        ng-disabled="authForm.$invalid"
                         class="btn btn-primary">
                     Сохранить данные
                 </button>

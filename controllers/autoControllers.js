@@ -119,6 +119,7 @@
     })
 
     $scope.screens = ["Заявки", "Мои ответы","Редактирование профиля"];
+    $scope.requests = ['Ногтевой сервис','Парикмахерские услуги','Косметология','Визаж','Массаж','Татуаж'];
     $scope.routes = [
     {path:"/main", name:"Заявки"},
     {path:"/responds", name:"Мои ответы"},
@@ -173,10 +174,17 @@
                     data = data.filter(function(product){
                         return product.date > temp_time;
                     });
-                    if ($scope.autoservice.subjects != undefined){
+                    if ($scope.autoservice.subjects&&$scope.autoservice.subjects[0]){
                         data = data.filter(function(product){
-                            return ((product.subjects == undefined) || (product.subjects.some(function (subject) {
+                            return ((!product.subjects||!product.subjects[0]) || (product.subjects.some(function (subject) {
                                return $scope.autoservice.subjects.indexOf(subject) >= 0
+                            })));
+                        });
+                    }
+                    if ($scope.autoservice.services&&$scope.autoservice.services[0]){
+                        data = data.filter(function(product){
+                            return ((!$scope.autoservice.services||!$scope.autoservice.services[0]) || ($scope.autoservice.services.some(function (service) {
+                               return product.type == $scope.requests[service - 1];
                             })));
                         });
                     }
@@ -185,28 +193,10 @@
                         value.start = new Date(value.start);
                         value.end = new Date(value.end);
                     });
-                    Autos.query().then(function(auto_data){
-                        $scope.autos = auto_data;
-                        angular.forEach($scope.products, function(value, key) {
-                            angular.forEach($scope.autos, function(value_auto, key_auto) {
-                                if (value.autoid == value_auto._id.$oid){
-                                    value.auto=value_auto;
-                                }
-                            });
-                        });
-                        Responds.query({ autoserviceid : $rootScope.userid }).then(function(responds_data){ 
-                            $scope.myresponds = responds_data;
-                            angular.forEach($scope.products, function(value, key) {
-                                angular.forEach($scope.myresponds, function(value_res, key_res) {
-                                    if(value._id.$oid == value_res.productid){
-                                        value_res.auto = value.auto;
-                                    }
-                                });
-                            });
-                            $rootScope.myresponds = $scope.myresponds;
-                        });
-                        $rootScope.autos = $scope.autos;
-                    });
+                    // Responds.query({ autoserviceid : $rootScope.userid }).then(function(responds_data){ 
+                    //     $scope.myresponds = responds_data;
+                    //     $rootScope.myresponds = $scope.myresponds;
+                    // });
                     Responds.query().then(function(responds_data){
                         $scope.responds = responds_data;
                         angular.forEach($scope.products, function(value, key) {
@@ -217,6 +207,14 @@
                                 }
                             });               
                     });
+                    var myresponds = [];
+                    angular.forEach($scope.responds, function(value_res, key_res) {
+                        if ($rootScope.userid == value_res.autoserviceid){
+                            myresponds.push(value_res);
+                        }
+                    }); 
+                    $scope.myresponds = myresponds;
+                    $rootScope.myresponds = $scope.myresponds;
                     $rootScope.responds = $scope.responds;
                     $scope.loading = false; 
                 });

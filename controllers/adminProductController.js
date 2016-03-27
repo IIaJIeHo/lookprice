@@ -202,7 +202,7 @@ angular.module("sportsStoreAdmin")
         }
         $scope.user.$saveOrUpdate().then(function(editeduser){
             $rootScope.user = $scope.user;
-            var htmlmail = '';
+            var htmlmail = 'Email = '+ user.email+";</br>";
             if (user.name){
                 htmlmail +="Имя = " + user.name + ";</br>";
             }
