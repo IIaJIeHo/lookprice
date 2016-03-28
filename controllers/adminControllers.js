@@ -1,4 +1,4 @@
-﻿angular.module("sportsStoreAdmin")
+﻿angular.module("lookPriceApp")
 .controller("authCtrl", function ($scope, $http, $location, $rootScope, $resource, userRegUrl, autoUrl, Users, Functions, $timeout) {
     $scope.error = null;
     $scope.isused = false;
@@ -128,10 +128,11 @@
 
     $scope.screens = ["Мои заявки","Автомобили","Оставить заявку","Редактирование профиля"];
     $scope.routes = [
-    {path:"/main", name:"Мои заявки"},
-    {path:"/leaverequest", name:"Оставить заявку"},
-    {path:"/edit", name:"Профиль"},
-    {path:"http://lookprice.ru/promotion", name:"Акции и Бонусы", ext: true}];
+        {path:"/main", name:"Мои заявки"},
+        {path:"/leaverequest", name:"Оставить заявку"},
+        {path:"/edit", name:"Профиль"},
+        {path:"http://lookprice.ru/promotion", name:"Акции и Бонусы", ext: true}];
+
     $scope.subjects = Data.getSubjects();
     var w = angular.element($window);
     if ($(window).width() < 768){
@@ -140,17 +141,6 @@
     else{
         $scope.shownav = true;
     }
-
-    
-    $scope.ToggleNav = function () {
-        if ($scope.shownav){
-            $scope.shownav = false;
-        }
-        else{
-            $scope.shownav = true;
-        }
-    }
-
    
     w.bind('resize', function () {
       if ($(window).width() > 768){
@@ -163,6 +153,15 @@
       }
     });
 
+    $scope.ToggleNav = function () {
+        if ($scope.shownav){
+            $scope.shownav = false;
+        }
+        else{
+            $scope.shownav = true;
+        }
+    }
+
     $scope.setScreen = function (index) {
     if ($(window).width() < 768){
         $scope.ToggleNav();
@@ -174,63 +173,45 @@
         $location.path($scope.routes[index].path);
     }
         
-        Requests.query({userid: $rootScope.userid}).then(function(data){
-            $scope.products = data;
+    Requests.query({userid: $rootScope.userid}).then(function(data){
+        $scope.products = data;
+        Responds.query().then(function(responds_data){
+            $scope.responds = responds_data;
             angular.forEach($scope.products, function(value, key) {
-                value.start = new Date(value.start);
-                value.end = new Date(value.end);
-            });
-            Autos.query({userid: $rootScope.userid}).then(function(auto_data){
-                $scope.autos = auto_data;
-                angular.forEach($scope.products, function(value, key) {
-                angular.forEach($scope.autos, function(value_auto, key_auto) {
-                    if (value.autoid == value_auto._id.$oid){
-                        value.auto=value_auto;
+                value.responds = [];
+                angular.forEach($scope.responds, function(value_res, key_res) {
+                    if (value._id.$oid == value_res.productid){
+                        value.responds.push(value_res);
                     }
-                });
-                });
-                $rootScope.autos = $scope.autos; 
-            });
-            Responds.query().then(function(responds_data){
-                $scope.responds = responds_data;
-                angular.forEach($scope.products, function(value, key) {
-                    value.responds = [];
-                    angular.forEach($scope.responds, function(value_res, key_res) {
-                        if (value._id.$oid == value_res.productid){
-                            value.responds.push(value_res);
-                        }
-                    });               
-            });
-            $rootScope.responds = $scope.responds;
-            $scope.loading = false; 
-        }); 
-        $rootScope.products = $scope.products;      
+                });               
         });
-        Users.getById($rootScope.userid).then(function(user){
-            $scope.user = user;
-            if (user.subjects != undefined){
-            $scope.subjects = Data.getSubjects();
-            $scope.subjects.data.map(function (x) {
-                if (user.subjects.indexOf(x.id) >= 0){
-                    x.checked = true;
-                }
-                else{
-                    x.checked = false;
-                }
-                return x;
-            });
-            $rootScope.subjects = $scope.subjects;               
+        $rootScope.responds = $scope.responds;
+        $scope.loading = false; 
+    }); 
+    $rootScope.products = $scope.products;      
+    });
+    Users.getById($rootScope.userid).then(function(user){
+        $scope.user = user;
+        if (user.subjects != undefined){
+        $scope.subjects = Data.getSubjects();
+        $scope.subjects.data.map(function (x) {
+            if (user.subjects.indexOf(x.id) >= 0){
+                x.checked = true;
             }
-            $rootScope.user = $scope.user; 
+            else{
+                x.checked = false;
+            }
+            return x;
         });
+        $rootScope.subjects = $scope.subjects;               
+        }
+        $rootScope.user = $scope.user; 
+    });
     };
 
     $scope.getScreen = function () {
         if ($scope.current == "Мои заявки"){
             return "views/adminProducts.html";
-        }
-        if ($scope.current == "Автомобили"){
-            return "views/adminAutos.html";
         }
         if ($scope.current == "Оставить заявку"){
             return "views/adminRequests.html";

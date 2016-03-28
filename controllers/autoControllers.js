@@ -1,4 +1,4 @@
-﻿angular.module("sportsStoreAdmin")
+﻿angular.module("lookPriceApp")
 .controller("authCtrl", function ($scope, $http, $location, $rootScope, $resource, autoRegUrl, Autoservices, Functions, Data) {
     if ($location.search()['email'] != undefined){
         Functions.alertAnimate($("#a-user-email"));

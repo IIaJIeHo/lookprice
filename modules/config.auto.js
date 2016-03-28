@@ -1,4 +1,4 @@
-angular.module("sportsStoreAdmin", ["ngRoute", "ngResource",'ui.bootstrap.datepicker','ui.bootstrap.buttons',"ui.bootstrap.tpls"])
+angular.module("lookPriceApp", ["ngRoute", "ngResource",'ui.bootstrap.datepicker','ui.bootstrap.buttons',"ui.bootstrap.tpls"])
   .config(function ($routeProvider) {
 
             $routeProvider.when("/login", {

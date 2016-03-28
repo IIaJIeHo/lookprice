@@ -154,7 +154,7 @@
                     {{formatDate(item.date)}}
                 </div>
                 <div class="col-md-2 toogle-action">
-                    <button ng-class="{'btn-success': (!item.approved),'btn-danger': (item.approved)}" ng-click="approveItem(item,item.autoservice)" class="btn">
+                    <button ng-class="{'btn-success': (!item.approved),'btn-danger': (item.approved)}" ng-click="approveRespond(item,item.autoservice)" class="btn">
                                 <span ng-if="!item.approved">Принять</span>
                                 <span ng-if="item.approved">Отклонить</span>
                     </button>
@@ -193,7 +193,7 @@
             </div>
             <div class="clearfix">
                 <div class="pull-left toogle-action" >
-                    <button ng-class="{'btn-success': (!item.approved),'btn-danger': (item.approved)}" ng-click="approveItem(item,item.autoservice)" class="btn btn-xs">
+                    <button ng-class="{'btn-success': (!item.approved),'btn-danger': (item.approved)}" ng-click="approveRespond(item,item.autoservice)" class="btn btn-xs">
                                 <span ng-if="!item.approved">Принять</span>
                                 <span ng-if="item.approved">Отклонить</span>
                     </button>
@@ -216,7 +216,7 @@
           </div>
           <div class="panel-body">
                 <form name="workForm{{$index+1}}" novalidate>
-                      <div class="panel panel-info panel-sub" ng-show="startEdit || hidesub(mainproduct.salons[rootIndex][parentIndex])" ng-repeat="subtype in type" ng-init="parentIndex = $index" ng-class="{'nosubtype':!subtype.title}">
+                      <div class="panel panel-info panel-sub" ng-show="startEdit || showsub(mainproduct.salons[rootIndex][parentIndex])" ng-repeat="subtype in type" ng-init="parentIndex = $index" ng-class="{'nosubtype':!subtype.title}">
                             <div class="panel-heading" role="tab" id="mend{{$index+1}}" ng-if="subtype.title">
                                 <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" data-target="#colmend{{$index+1}}" aria-expanded="false" aria-controls="colmend{{$index+1}}">
                                 <h4 class="panel-title">
@@ -311,6 +311,7 @@
                                   <input type="text" class="form-control" ng-focus="open2()" ng-disabled="!startEdit" uib-datepicker-popup ng-model="mainproduct.end" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" readonly />
                                 </p>
                               </div>
+
                             </div>
                             <div class="form-group pull-right clearfix">
                                 <i class="sprite sprite-udobnoe-vremya"></i>

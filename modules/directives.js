@@ -1,4 +1,4 @@
-angular.module("sportsStoreAdmin")
+angular.module("lookPriceApp")
 .directive('ngConfirmClick', [
         function(){
             return {

@@ -1,4 +1,4 @@
-﻿angular.module("sportsStoreAdmin")
+﻿angular.module("lookPriceApp")
 .controller("productCtrl", function ($scope, $rootScope, $resource, $filter, $location, productUrl, autoRegUrl, respondUrl, userRegUrl, autoUrl, Autos, Users, Autoservices, Responds, Requests, Functions, Data) {
 
     $scope.productsResource = $resource(productUrl + ":id", { id: "@id" });
@@ -25,7 +25,6 @@
     $scope.startEdit = false;
     $scope.loading = false;
     $scope.answered = false;
-    $scope.showtable = false;
     $scope.baseurl = $location.absUrl().substring(0,$location.absUrl().indexOf('/a'));
     $scope.requests = ['Ногтевой сервис','Парикмахерские услуги','Косметология','Визаж','Массаж','Татуаж'];
     $scope.services = [
@@ -231,17 +230,6 @@
         }
     }
 	
-	$scope.checknegative = function(array,name) {
-        var checking = false;
-        angular.forEach(array, function(value){
-            if ((value == true)){
-                checking = true;
-                $scope.showtable = true;
-                $scope.formdetails = name;
-            }
-        });
-        return checking;
-    }
     $scope.changedetail = function(name){
         $scope.formdetails = name;
     }
@@ -249,19 +237,8 @@
         $scope.formdetails2 = name;
     }
 	
-    $scope.checknegative2 = function(array,name) {
-        var checking = false;
-        angular.forEach(array, function(value){
-            if ((value == true)){
-                checking = true;
-                $scope.showtable = true;
-                $scope.formdetails2 = name;
-            }
-        });
-        return checking;
-    }
 
-    $scope.hidesub = function (data) {
+    $scope.showsub = function (data) {
         var ok = false;
         angular.forEach(data,function (value,key) {
             if (value){
@@ -492,7 +469,6 @@
 
     $scope.viewRespond = function (respond,number) {
         $scope.respondview = number;
-        $scope.showtable = false;
         $scope.mainrespond = respond;
         $scope.startEdit = false;
         angular.forEach($scope.products, function(value, key) {
@@ -507,7 +483,6 @@
         angular.forEach(array, function(value){
             if ((value == true)&&(checking == false)){
                 checking = true;
-                $scope.showtable = true;
                 if ($scope.formdetails == null){
                     $scope.formdetails = name;
                 }
@@ -546,7 +521,6 @@
         $scope.answered = false;
         $scope.mainproduct = product;
         $scope.startEdit = false;
-        $scope.showtable = false;
         if (product){
             $scope.toogleAutoservice = [];
             $scope.activeresponds = [];
