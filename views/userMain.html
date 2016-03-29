@@ -1,7 +1,7 @@
 ﻿<div ng-controller="mainCtrl">
 <div class="text-center top-back-site"><a href="http://lookprice.ru/" target="_blank"><span class="sprite sprite-na-sait"></span>Вернуться на сайт</a></div>
 <nav class="navbar">
-      <div class="container" ng-controller="productCtrl">
+      <div class="container" ng-controller="userProductCtrl">
         <div class="row text-center top-logo-head">
           <div class="pull-left" ><span class="position-relative"><span ng-show="user.gender" class="sprite sprite-user-man"></span><span ng-show="!user.gender" class="sprite sprite-user-girl"></span>Привет, {{user.name}}!</span></div>
           <img src="images/logo.png">
@@ -24,10 +24,10 @@
               <a href="http://www.love-sl.ru/" target="_blank"><img src="images/banner_left.jpg" /></a>
             </div>
           </div>
-    	   <div class="col-sm-9" ng-controller="productCtrl" >
-            <div ng-include="'views/adminProducts.html'" ng-show="mainView"/></div>
-            <div ng-include="'views/adminRequests.html'" ng-show="requestView"/></div>
-            <div ng-include="'views/adminEdit.html'" ng-show="editView"/></div>
+    	   <div class="col-sm-9" ng-controller="userProductCtrl" >
+            <div ng-include="'views/userProducts.html'" ng-show="mainView"/></div>
+            <div ng-include="'views/userRequests.html'" ng-show="requestView"/></div>
+            <div ng-include="'views/userEdit.html'" ng-show="editView"/></div>
     	   </div>
       </div>
       <div class="full-width col-sm-12">

@@ -1,10 +1,9 @@
 ﻿angular.module("lookPriceApp")
-.controller("authCtrl", function ($scope, $http, $location, $rootScope, $resource, autoRegUrl, Autoservices, Functions, Data) {
+.controller("authCtrl", function ($scope, $http, $location, $rootScope, $resource, Autoservices, Functions, Data) {
     if ($location.search()['email'] != undefined){
         Functions.alertAnimate($("#a-user-email"));
         $scope.email = $location.search()['email'];
     }
-    $scope.RegResource = $resource(autoRegUrl + ":id", { id: "@id" });
     $scope.authenticate = function (mail, pass) {
         $scope.candidat = Autoservices.query({email: mail}).then(function(user){
             if (user[0] != undefined){
@@ -226,23 +225,5 @@
             $scope.autoservices = autoservices;
             $rootScope.autoservices = $scope.autoservices;
         });
-    };
-
-    $scope.getScreen = function () {
-        if ($scope.current == "Заявки"){
-            return "views/autoProducts.html";
-        }
-        if ($scope.current == "Мои ответы"){
-            return "views/autoResponds.html";
-        }
-        if ($scope.current == "Оставить заявку"){
-            return "views/adminRequests.html";
-        }
-        if ($scope.current == "Редактирование профиля"){
-            return "views/autoEdit.html";
-        }
-        if ($scope.current == "Партнеры"){
-            return "views/adminPartners.html";
-        }
     };
 });

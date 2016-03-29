@@ -116,10 +116,10 @@ gulp.task('clean', function () {
 gulp.task('javascript:admin', function () {
   gulp.src(['angular.js', './ngmodules/*.js', 'md5.min.js','sweetalert.min.js',
     'angular-locale_ru-ru.js', 'jquery-latest.js','bootstrap.min.js' , './modules/config.admin.js' , 
-    './modules/directives.js', './modules/factories.js', './modules/ui-bootstrap-tpls-1.2.1.min.js', './controllers/adminControllers.js', './controllers/adminProductController.js'])
+    './modules/directives.js', './modules/factories.js', './modules/ui-bootstrap-tpls-1.2.1.min.js', './controllers/userControllers.js', './controllers/userProductController.js'])
     .pipe(debug())
     .pipe(uglify())
-    .pipe(concat('bundle_admin.min.js'))
+    .pipe(concat('bundle_user.min.js'))
     .pipe(gulp.dest('public/scripts'))
 });
 
@@ -127,10 +127,10 @@ gulp.task('javascript:auto', function () {
   gulp.src(['angular.js', './ngmodules/*.js', 'md5.min.js','./weetalert.min.js',
     './angular-locale_ru-ru.js', 'jquery-latest.js','bootstrap.min.js', './modules/config.auto.js',
     './modules/directives.js', './modules/factories.js',
-    './controllers/autoControllers.js', './controllers/autoProductController.js'])
+    './controllers/salonControllers.js', './controllers/salonProductController.js'])
     .pipe(debug())
     .pipe(uglify())
-    .pipe(concat('bundle_auto.min.js'))
+    .pipe(concat('bundle_salon.min.js'))
     .pipe(gulp.dest('public/scripts'))
 });
 

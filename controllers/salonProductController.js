@@ -1,11 +1,6 @@
 ﻿angular.module("lookPriceApp")
-.controller("productCtrl", function ($scope, $rootScope, $resource, $filter, $location, productUrl, autoRegUrl, respondUrl, userRegUrl, autoUrl, Autos, Users, Autoservices, Responds, Requests, Functions, Data) {
+.controller("productCtrl", function ($scope, $rootScope, $resource, $filter, $location, Autos, Users, Autoservices, Responds, Requests, Functions, Data) {
 
-    $scope.productsResource = $resource(productUrl + ":id", { id: "@id" });
-    $scope.RegResource = $resource(autoRegUrl + ":id", { id: "@id" });
-    $scope.RespondResource = $resource(respondUrl + ":id", { id: "@id" });
-    $scope.UserResource = $resource(userRegUrl + ":id", { id: "@id" });
-    $scope.AutoResource = $resource(autoUrl + ":id", { id: "@id" });
     $scope.allitems = true;
     $scope.toogleAutoservice = [];
     $scope.mainproduct = null;
@@ -27,60 +22,22 @@
     $scope.answered = false;
     $scope.baseurl = $location.absUrl().substring(0,$location.absUrl().indexOf('/a'));
     $scope.requests = ['Ногтевой сервис','Парикмахерские услуги','Косметология','Визаж','Массаж','Татуаж'];
-    $scope.services = [
-    {
-        id: "1",
-        label: "Ногтевой сервис"
-    },
-    {
-        id: "2",
-        label: "Парикмахерские услуги"
-    },
-    {
-        id: "3",
-        label: "Косметология"
-    },
-    {
-        id: "4",
-        label: "Визаж"
-    },
-    {
-        id: "5",
-        label: "Массаж"
-    },
-    {
-        id: "6",
-        label: "Татуаж"
-    }
-    ];
-    $scope.texts = Data.getWorkTypes();
+    $scope.services = Data.getSalons();
     $scope.metrostations = Data.getMetro();
     $scope.regions = Data.getRegions();
     $scope.subjects = Data.getSubjects();
     $rootScope.subjects = $scope.subjects;
     $scope.salon_types = Data.getSalonTypes();
+
     $scope.logout = function(){
         $rootScope.userid = undefined;
         document.cookie = "autolookid=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;";
         $rootScope.products = null;
         $scope.listProducts();
     }
-        $scope.formatDate = function(date) {
-            if (date != undefined){
-                 date = new Date(date);
-              var hours = date.getHours();
-              hours = hours < 10 ? '0'+hours : hours;
-              var minutes = date.getMinutes();
-              var seconds = date.getSeconds();
-              var day = date.getDate() < 10 ? '0'+date.getDate() : date.getDate();
-              var month = (date.getMonth()+1) < 10 ? '0'+ (date.getMonth() + 1) : (date.getMonth() + 1);
-              minutes = minutes < 10 ? '0'+minutes : minutes;
-              var strTime = hours + ':' + minutes;
-              return day + "." + month+ "." + date.getFullYear() + " / " + strTime + "";               
-            }
-            else{
-                return '';
-            }
+
+    $scope.formatDate = function(date) {
+        return Functions.dataTransform(date);
     }
     $scope.listProducts = function () {
         $scope.loading = true; 
@@ -129,11 +86,7 @@
                         data = data.filter(function(product){
                             return product.date > temp_time;
                         });
-                        // Responds.query({autoserviceid:$rootScope.userid}).then(function(responds_data){ 
-                        //     console.log(responds_data);
-                        //     $scope.myresponds = responds_data;
-                        //     $rootScope.myresponds = $scope.myresponds;
-                        // });
+
                         if ($scope.autoservice.subjects&&$scope.autoservice.subjects[0]){
                             data = data.filter(function(product){
                                 return ((!product.subjects||!product.subjects[0]) || (product.subjects.some(function (subject) {
@@ -204,37 +157,13 @@
         $(this).tab('show');
     });
 
-    $scope.deleteProduct = function (product) {
-        product.$remove().then(function () {
-            $scope.products.splice($scope.products.indexOf(product), 1);
-        });
-    }
 
     $scope.filterbySubject = function (subject) {
-
-        if ($scope.autoservice&&$scope.autoservice.subjects){
-            return ($scope.autoservice.subjects.indexOf(subject.id) !== -1);
-        }
-        else{
-            return false;
-        }
+        return $scope.user&&$scope.user.subjects ? $scope.user.subjects.indexOf(subject.id) !== -1 : false;
     }
 
     $scope.filterbyService = function (service) {
-
-        if ($scope.autoservice&&$scope.autoservice.services){
-            return ($scope.autoservice.services.indexOf(service.id) !== -1);
-        }
-        else{
-            return false;
-        }
-    }
-	
-    $scope.changedetail = function(name){
-        $scope.formdetails = name;
-    }
-    $scope.changedetail2 = function(name){
-        $scope.formdetails2 = name;
+        return $scope.autoservice&&$scope.autoservice.services ? $scope.autoservice.services.indexOf(service.id) !== -1 : false;
     }
 	
 
@@ -248,7 +177,7 @@
        return ok;
     }
 
-        $scope.open1 = function() {
+    $scope.open1 = function() {
         $scope.popup1.opened = true;
     };
 
@@ -256,37 +185,28 @@
         $scope.popup2.opened = true;
     };
 
-  $scope.dateOptions = {
-    dateDisabled: disabled,
-    formatYear: 'yy',
-    maxDate: new Date(2020, 5, 22),
-    minDate: new Date(),
-    startingDay: 1
-  };
+      $scope.dateOptions = {
+        dateDisabled: disabled,
+        formatYear: 'yy',
+        maxDate: new Date(2020, 5, 22),
+        minDate: new Date(),
+        startingDay: 1
+      };
 
-   function disabled(data) {
-    var date = data.date,
-      mode = data.mode;
-    return mode === 'day' && (false);
-  }
+       function disabled(data) {
+        var date = data.date,
+          mode = data.mode;
+        return mode === 'day' && (false);
+      }
 
-    $scope.popup1 = {
-    opened: false
-  };
+        $scope.popup1 = {
+        opened: false
+      };
 
-  $scope.popup2 = {
-    opened: false
-  };
+      $scope.popup2 = {
+        opened: false
+      };
 
-    $scope.createProduct = function (product) {
-        product.userid=$rootScope.userid;
-        $scope.loading = true; 
-        new $scope.productsResource(product).$save().then(function (newProduct) {
-            $scope.products.push(newProduct);
-            $scope.editedProduct = null;
-            $scope.loading = false; 
-        });
-    }
     $scope.editUser = function(user, passchange, password){
         $scope.loading = true;
         if (passchange){
@@ -295,27 +215,13 @@
         $scope.autoservice.$saveOrUpdate().then(function(editeduser){
             $rootScope.user = $scope.user;
             var htmlmail='Email = '+user.email+";</br>";
-            if (user.name){
-                htmlmail +="Название = " + user.name + ";</br>";     
-            }
-            if (user.description){
-                htmlmail +="Описание = " + user.description + ";</br>";    
-            }
-            if (user.phone){
-                htmlmail +="Телефон = " + user.phone + ";</br>";
-            }
-            if (user.town){
-                htmlmail +="Город = " + user.town + ";</br>";
-            }
-            if (user.adress){
-                htmlmail +="Адрес = " + user.adress + ";</br>";
-            }
-            if (user.site){
-                htmlmail +="Сайт = " + user.site + ";</br>";
-            }
-            if (user.link){
-                htmlmail +="Ссылка на профиль = " + user.link + ";</br>";
-            }
+            htmlmail = user.name ? htmlmail + "Имя = " + user.name + ";</br>" : htmlmail;
+            htmlmail = user.description ? htmlmail + "Описание = " + user.description + ";</br>" : htmlmail;
+            htmlmail = user.phone ? htmlmail + "Телефон = " + user.phone + ";</br>" : htmlmail;
+            htmlmail = user.town ? htmlmail + "Город = " + user.town + ";</br>" : htmlmail;
+            htmlmail = user.adress ? htmlmail + "Адрес = " + user.adress + ";</br>" : htmlmail;
+            htmlmail = user.site ? htmlmail + "Сайт = " + user.site + ";</br>" : htmlmail;
+            htmlmail = user.link ? htmlmail + "Ссылка на профиль = " + user.link + ";</br>" : htmlmail;
             if (passchange){
                 Functions.sendMail({
                     email: user.email,
@@ -332,9 +238,7 @@
                         subjects += value.label+" ;";
                     }
                 });
-                if (subjects){
-                    htmlmail +="Регионы = " + subjects + ";</br>";
-                }
+                htmlmail = subjects ? htmlmail + "Регионы = " + subjects + ";</br>" : htmlmail;
                 Functions.sendMail({
                     email: user.email,
                     username: user.email,
@@ -354,15 +258,9 @@
         respond.productid=$scope.mainproduct._id.$oid;
         respond.type = $scope.mainproduct.type;
         respond.date = Date.now();
-        if ($scope.autoservice.number === undefined){
-            $scope.autoservice.number = 0;
-        }
-        else{
-            $scope.autoservice.number += 1;
-        }
-        /*respond.name = parseInt($scope.autoservice.phone.substring(4),10).toString(32) + "-" + (2000000 + $scope.autoservice.number);*/
+        $scope.autoservice.number = $scope.autoservice.number === undefined ? 0 : $scope.autoservice.number + 1;
         respond.name = $scope.mainproduct.name;
-        angular.forEach($scope.users,function(value,key){
+        angular.forEach($scope.users, function(value,key){
                 if (keepgoing){
                     if (value._id.$oid== $scope.mainproduct.userid){
                         respond.phone = value.phone;
@@ -385,9 +283,7 @@
              Functions.alertAnimate($("#a-respond-new"));
             $scope.editedRespond = {};
             $scope.mainproduct.replied = true;
-            auto = $scope.mainproduct.auto;
             responds = $scope.mainproduct.responds;
-            $scope.mainproduct.auto = [];
             $scope.mainproduct.responds = [];
             $scope.mainproduct.$update();
             $scope.mainproduct.auto = auto;
@@ -405,15 +301,6 @@
         });   
     }
 
-    $scope.updateProduct = function (product) {
-        product.date = Date.now();
-        product.$update();
-        $scope.editedProduct = null;
-    }
-
-    $scope.startEdit = function (product) {
-        $scope.editedProduct = product;
-    }
     $scope.predicate='date';
     $scope.reverse = true;
     $scope.order = function(predicate){
@@ -432,6 +319,7 @@
         });
         $scope.mainrespond = null;
     }
+
     $scope.isdeleteRespond = function(respond){
             swal({
               title: "Вы уверены?",
@@ -452,6 +340,7 @@
               }
             });
     }
+
     $scope.deleteRespond = function (respond) {
         $scope.updatedRespond = respond;
         respond.$remove().then(function () {
@@ -476,19 +365,6 @@
                 $scope.mainproduct = value;
             }
         });
-    }
-
-    $scope.checknegative = function(array,name) {
-        var checking = false;
-        angular.forEach(array, function(value){
-            if ((value == true)&&(checking == false)){
-                checking = true;
-                if ($scope.formdetails == null){
-                    $scope.formdetails = name;
-                }
-            }
-        });
-        return checking;
     }
 
     $scope.imageinit = function () {
@@ -548,6 +424,7 @@
             });           
         }
     }
+
     $scope.deleteItem = function (respond) {
         respond.$remove().then(function () {
             $scope.responds.splice($scope.responds.indexOf(respond), 1);       

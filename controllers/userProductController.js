@@ -1,5 +1,5 @@
 angular.module("lookPriceApp")
-.controller("productCtrl", function ($scope, $rootScope, $resource, $location, $filter, productUrl, Data, userRegUrl, respondUrl, serviceUrl, autoUrl, Autos, Users, Autoservices, Responds, Requests, Functions) {
+.controller("userProductCtrl", function ($scope, $rootScope, $resource, $location, $filter, Data, Autos, Users, Autoservices, Responds, Requests, Functions) {
     $scope.allitems = true;
     $scope.mainproduct = null;
     $scope.user = null;
@@ -151,21 +151,7 @@ angular.module("lookPriceApp")
       /* datapicker */
 
     $scope.formatDate = function(date) { /* make directive */
-        if (date != undefined){
-            date = new Date(date);
-            var hours = date.getHours();
-            hours = hours < 10 ? '0'+hours : hours;
-            var minutes = date.getMinutes();
-            var seconds = date.getSeconds();
-            var day = date.getDate() < 10 ? '0'+date.getDate() : date.getDate();
-            var month = (date.getMonth()+1) < 10 ? '0'+ (date.getMonth() + 1) : (date.getMonth() + 1);
-            minutes = minutes < 10 ? '0'+minutes : minutes;
-            var strTime = hours + ':' + minutes;
-            return day + "." + month+ "." + date.getFullYear() + " / " + strTime + "";               
-        }
-        else{
-            return '';
-        }
+        return Functions.dataTransform(date);
     }
 
     /* sorting make directive*/
@@ -188,8 +174,8 @@ angular.module("lookPriceApp")
 
             htmlmail = 'Email = '+ user.email+";</br>";
             htmlmail = user.name ? htmlmail + "Имя = " + user.name + ";</br>" : htmlmail;
-            htmlmail = user.surname ? htmlmail + "Имя = " + user.surname + ";</br>" : htmlmail;
-            htmlmail = user.phone ? htmlmail + "Имя = " + user.phone + ";</br>" : htmlmail;
+            htmlmail = user.surname ? htmlmail + "Фамилия = " + user.surname + ";</br>" : htmlmail;
+            htmlmail = user.phone ? htmlmail + "Телефон = " + user.phone + ";</br>" : htmlmail;
 
             if (passchange){
 
@@ -455,7 +441,7 @@ angular.module("lookPriceApp")
         });         
     }
         $scope.changeActiveRequest = function (number) {
-            $scope.activerequest = number;
+            $scope.activerequest = number ? number : $scope.chosenRequest;
         }
 
 

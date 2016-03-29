@@ -1,5 +1,5 @@
 ﻿angular.module("lookPriceApp")
-.controller("authCtrl", function ($scope, $http, $location, $rootScope, $resource, userRegUrl, autoUrl, Users, Functions, $timeout) {
+.controller("authCtrl", function ($scope, $http, $location, $rootScope, $resource, Users, Functions, $timeout) {
     $scope.error = null;
     $scope.isused = false;
     $scope.isusedmail = false;
@@ -207,20 +207,5 @@
         }
         $rootScope.user = $scope.user; 
     });
-    };
-
-    $scope.getScreen = function () {
-        if ($scope.current == "Мои заявки"){
-            return "views/adminProducts.html";
-        }
-        if ($scope.current == "Оставить заявку"){
-            return "views/adminRequests.html";
-        }
-        if ($scope.current == "Редактирование профиля"){
-            return "views/adminEdit.html";
-        }
-        if ($scope.current == "Партнеры"){
-            return "views/adminPartners.html";
-        }
     };
 });

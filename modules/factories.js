@@ -1,12 +1,4 @@
 angular.module("lookPriceApp")
-.constant("userRegUrl", "http://localhost:5500/users/")
-.constant("ordersUrl", "http://localhost:5500/orders/")
-.constant("autoUrl", "http://localhost:5500/autos/")
-.constant("productUrl", "http://localhost:5500/products/")
-.constant("respondUrl", "http://localhost:5500/responds/")
-.constant("serviceUrl", "http://localhost:5500/autoservices/")
-.constant("fileupload", "http://localhost:5500/upload/")
-.constant("autoRegUrl", "http://localhost:5500/autoservices/")
 .constant('MONGOLAB_CONFIG',{API_KEY:'72ttJZdjdl6L4-ZnnfSaFOiCK4lGs-gN', DB_NAME:'lookprice'})
         .factory('Users', ['$mongolabResourceHttp' ,function ($mongolabResourceHttp) {
             return $mongolabResourceHttp('Users');
@@ -71,6 +63,24 @@ angular.module('lookPriceApp')
            elem.hide();
         });
       },
+      dataTransform: function(date) {
+          if (date != undefined){
+             date = new Date(date);
+          var hours = date.getHours();
+          hours = hours < 10 ? '0'+hours : hours;
+          var minutes = date.getMinutes();
+          var seconds = date.getSeconds();
+          var day = date.getDate() < 10 ? '0'+date.getDate() : date.getDate();
+          var month = (date.getMonth()+1) < 10 ? '0'+ (date.getMonth() + 1) : (date.getMonth() + 1);
+          minutes = minutes < 10 ? '0'+minutes : minutes;
+          var strTime = hours + ':' + minutes;
+          return day + "." + month+ "." + date.getFullYear() + " / " + strTime + "";               
+          }
+          else{
+              return '';
+          }
+      },
+
       getCookie: function(name) {
         var matches = document.cookie.match(new RegExp(
           "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
@@ -112,7 +122,35 @@ angular.module('lookPriceApp')
   }
 }])
 .factory('Data', [function(){
-    return{  
+    return{
+      getSalons: function() {
+        return [
+              {
+                  id: "1",
+                  label: "Ногтевой сервис"
+              },
+              {
+                  id: "2",
+                  label: "Парикмахерские услуги"
+              },
+              {
+                  id: "3",
+                  label: "Косметология"
+              },
+              {
+                  id: "4",
+                  label: "Визаж"
+              },
+              {
+                  id: "5",
+                  label: "Массаж"
+              },
+              {
+                  id: "6",
+                  label: "Татуаж"
+              }
+              ];
+      },
       getSalonTypes: function () {
         return {
           "1":[

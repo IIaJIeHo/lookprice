@@ -4,7 +4,7 @@
         Вы добавили новую заявку
     </div>
 
-<div ng-controller="productCtrl" class="partial-view wrapper-part">
+<div class="partial-view wrapper-part">
     <div class="container-fluid leave-request">
     <div class="choose-work">       
         <div class="row">
@@ -12,8 +12,8 @@
         </div>
         <div class="row visible-sm visible-xs">
             <div class="col-sm-12">
-                <select class="form-control" id="chooserequest" ng-model="chosenRequest" ng-change="changeRequest()">
-                    <option ng-repeat="item in request_types" value='{{$index+1}}'>{{request_types[$index]}}</option>
+                <select class="form-control" id="chooserequest" ng-model="$parent.chosenRequest" ng-change="changeActiveRequest()">
+                    <option ng-repeat="item in requests" value='{{$index+1}}'>{{requests[$index]}}</option>
                 </select>
             </div>
         </div>

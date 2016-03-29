@@ -1,28 +1,28 @@
-angular.module("lookPriceApp", ["ngRoute", "ngResource",'ui.bootstrap.datepicker','ui.bootstrap.buttons',"ui.bootstrap.tpls"])
+angular.module("lookPriceApp", ["ngRoute", "ngResource","ui.bootstrap.datepicker","ui.bootstrap.buttons","ui.bootstrap.tpls"])
   .config(function ($routeProvider) {
 
             $routeProvider.when("/login", {
-                    templateUrl: "views/autoLogin.html"
+                    templateUrl: "views/salonLogin.html"
                 });
 
                 $routeProvider.when("/registration", {
-                    templateUrl: "views/autoRegistration.html"
+                    templateUrl: "views/salonRegistration.html"
                 });
 
                 $routeProvider.when("/main", {
-                    templateUrl: "views/autoMain.html"
+                    templateUrl: "views/salonMain.html"
                 });
 
                 $routeProvider.when("/edit", {
-                    templateUrl: "views/autoMain.html"
+                    templateUrl: "views/salonMain.html"
                 });
 
                 $routeProvider.when("/responds", {
-                    templateUrl: "views/autoMain.html"
+                    templateUrl: "views/salonMain.html"
                 });
 
                 $routeProvider.when("/forgetpassword", {
-                    templateUrl: "views/autoForgetPassword.html"
+                    templateUrl: "views/salonForgetPassword.html"
                 });
 
                 $routeProvider.otherwise({

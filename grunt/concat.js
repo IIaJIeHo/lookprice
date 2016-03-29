@@ -12,7 +12,7 @@ module.exports = {
 		src: ['angular.js', 'ngmodules/*.js', 'md5.min.js','sweetalert.min.js',
 		'angular-locale_ru-ru.js', 'jquery-latest.js','bootstrap.min.js', 'modules/config.auto.js','modules/ui-bootstrap-tpls-1.2.3.js',
 		'modules/directives.js', 'modules/factories.js',
-		'controllers/autoControllers.js', 'controllers/autoProductController.js'],
+		'controllers/salonControllers.js', 'controllers/salonProductController.js'],
 		dest: 'dist/scripts/bundle_auto.js',
 	},
 	styles: {

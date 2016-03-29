@@ -1,8 +1,8 @@
 module.exports = {
     dist: {
       files: {
-        'dist/admin.html': ['admin.html'],
-		'dist/auto.html': ['auto.html']
+        'dist/user.html': ['user.html'],
+		'dist/salon.html': ['salon.html']
       }
     }
 };
