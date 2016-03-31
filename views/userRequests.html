@@ -28,10 +28,10 @@
     </div>
     <ng-spinner></ng-spinner>
 
-    <div id="request{{$index+1}}"  ng-repeat="type in salon_types" ng-if="activerequest == ($index + 1)" ng-init="rootIndex = $index">
+    <div id="request{{$index+1}}"  ng-repeat="(key,type) in salon_types" ng-if="activerequest == ($index + 1)" ng-init="rootIndex = $index">
         <div class="panel panel-info panel-main">
           <div class="panel-heading">
-            <h2 class="panel-title"><i class="sprite sprite-o{{$index+1}}"></i>{{requests[$index]}}</h2>
+            <h2 class="panel-title"><i class="sprite sprite-o{{$index+1}}"></i>{{key}}</h2>
           </div>
           <div class="panel-body">
                 <form name="workForm{{$index+1}}" novalidate>
@@ -57,8 +57,8 @@
                                     </div>
                                 </div>
                                 </div>
+                            </div>
                         </div>
-                    </div>
                         <div class="form-group comment-form">
                             <p>Если вы не нашли интересующие вас услуги в списке выше, то вы можете описать задачу своими словами. Для этого воспользуйтесь формой ниже. При необходимости вы можете прикрепить фотографии, которые помогут нашим партнерам сделать вам более точное предложение.</p>
                         </div>

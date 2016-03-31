@@ -390,5 +390,17 @@ angular.module("lookPriceApp")
           },
         templateUrl: 'modules/login.tmpl.html'
       }
+  })
+  .directive('panelForm',function () {
+      return{
+        restrict: 'E',
+        replace: true,
+        scope:
+          {
+            mainproduct: '=',
+            salon_types: '='
+          },
+        templateUrl: 'modules/panel.tmpl.html'
+      }
   });
 
